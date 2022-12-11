@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Eureka!</title>
+    <link>https://johhnmag0.github.io/post/</link>
+    <description>Recent content in Posts on Eureka!</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 Sep 2022 13:00:00 -0300</lastBuildDate><atom:link href="https://johhnmag0.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Generating Random Passwords</title>
+      <link>https://johhnmag0.github.io/post/2022/09/09/generating-random-passwords/</link>
+      <pubDate>Fri, 09 Sep 2022 13:00:00 -0300</pubDate>
+      
+      <guid>https://johhnmag0.github.io/post/2022/09/09/generating-random-passwords/</guid>
+      <description>Generating Random Passwords  Introduction Why Computers can&amp;rsquo;t Generate Random Numbers? /dev/urandom and /dev/random Implementing a CLI on Linux  1.Introduction I have been taking some classes at the university these last few weeks, and we started to get a grasp on the C programming language, and I really like the idea of seeing how things work under the hood. But I really think that the best way to see if you are really getting somewhere is to make some projects, and one of the things that I consider very useful but we don&amp;rsquo;t have that by default on Linux is a random password generator, so I decided to create a simple CLI program that does exactly that generates random passwords.</description>
+    </item>
+    
+    <item>
+      <title>2fa Authentication PHP</title>
+      <link>https://johhnmag0.github.io/post/2022/08/08/2fa-authentication-php/</link>
+      <pubDate>Mon, 08 Aug 2022 21:34:25 -0300</pubDate>
+      
+      <guid>https://johhnmag0.github.io/post/2022/08/08/2fa-authentication-php/</guid>
+      <description>Introduction What is the OTP? URI Format Enconding with Base32 Generating a QRCode  1.Introduction For the last month, I have been working on a library for PHP that will implement the OTP(One Time Password) in an easy way. In the following topics, I will try to explain each technology and protocol that were used to build this software. If you don&amp;rsquo;t want to pass for this technical stuff, you can just go to the explanation of the library.</description>
+    </item>
+    
+    <item>
+      <title>Graphic Desing is My Passion</title>
+      <link>https://johhnmag0.github.io/post/2022/07/19/graphic-desing-is-my-passion/</link>
+      <pubDate>Tue, 19 Jul 2022 22:06:46 -0300</pubDate>
+      
+      <guid>https://johhnmag0.github.io/post/2022/07/19/graphic-desing-is-my-passion/</guid>
+      <description>I know that right in the first page you get all that talk about getting insides and all that, but before we get in all that stuff I think I need to address the fact that a lot of people will look to this blog and thing &amp;ldquo;well that&amp;rsquo;s just sh&amp;amp;@$&amp;rdquo;, and I know that I&amp;rsquo;m not very good a desing myself.
+But something too fancy would destroy the idea of this site.</description>
+    </item>
+    
+  </channel>
+</rss>

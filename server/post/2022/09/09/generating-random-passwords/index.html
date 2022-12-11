@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+
+	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+	
+	
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple and static blog.">
+    <title>Generating Random Passwords | Eureka!</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="https://johhnmag0.github.io/css/theme-override.css">
+    <header>
+
+  <nav>
+    <ul>
+      
+      
+      <li class="pull-left ">
+        <b><a href="https://johhnmag0.github.io/">[eureka!]</a></b>
+      </li>
+      
+      
+      <li class="pull-left ">
+        <b><a href="/tables/">table of contents</a></b>
+      </li>
+      
+
+      
+      
+      <li class="pull-right">
+	<a href="/index.xml"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-rss-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm1.5 2.5c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1 0-2zm0 4a6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1 0-2zm.5 7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+</svg>
+</a>
+      </li>
+      
+
+    </ul>
+  </nav>
+</header>
+
+  </head>
+
+  <body>
+    <br/>
+
+<div class="article-meta">
+<h1><span class="title">Generating Random Passwords</span></h1>
+
+<h2 class="date">2022/09/09</h2>
+<p class="terms">
+  
+  
+  
+  
+  
+</p>
+</div>
+
+
+<div class="content-wrapper">
+  <main>
+    <h1 id="generating-random-passwords">Generating Random Passwords</h1>
+<ol>
+<li>Introduction</li>
+<li>Why Computers can&rsquo;t Generate Random Numbers?</li>
+<li>/dev/urandom and /dev/random</li>
+<li>Implementing a CLI on Linux</li>
+</ol>
+<h1 id="1introduction">1.Introduction</h1>
+<p>I have been taking some classes at the university these last few weeks, and we started to get a grasp on the C programming language, and I really like the idea of seeing how things work under the hood. But I really think that the best way to see if you are really getting somewhere is to make some projects, and one of the things that I consider very useful but we don&rsquo;t have that by default on Linux is a random password generator, so I decided to create a simple CLI program that does exactly that generates random passwords. So for the rest of this article, we are going to see how this program is implemented and why I decided to make certain decisions.</p>
+<h1 id="2-why-computers-cant-generate-random-numbers">2. Why Computers Can&rsquo;t Generate Random Numbers?</h1>
+<p>As you may know, a computer is basically a bloated calculator that was used by NASA to go to the moon and, not so distant by your grandmother to play candy crush. And because of this aspect of the computer, that is, it&rsquo;s always doing calculus of some sort, we can&rsquo;t generate random numbers, because if you think about it you can&rsquo;t pass to a calculator two values and expect a random answer (like 2+2=127), and thank god for that. Although it is very good for our computer not to return random numbers in its operations, this also ends up being a problem, because there are cases when we need this kind of thing to happen, like in cryptography, for example. Because of this, some very smart guys work on implementations that allow so-called pseudo-random numbers to be generated. Most programming languages and even the Operational System have some kind of implementation of an algorithm that generates pseudo-random numbers. In C we a have a very common function that is in the standard library, rand() and srand():</p>
+<ul>
+<li>
+<p>rand(); this is the function that will return to us a random number. The source code of this function is this:</p>
+<pre tabindex="0"><code>int
+rand_r (unsigned int *seed)
+{
+unsigned int next = *seed;
+int result;
+
+next *= 1103515245;
+next += 12345;
+result = (unsigned int) (next / 65536) % 2048;
+
+next *= 1103515245;
+next += 12345;
+result &lt;&lt;= 10;
+result ^= (unsigned int) (next / 65536) % 1024;
+
+next *= 1103515245;
+next += 12345;
+result &lt;&lt;= 10;
+result ^= (unsigned int) (next / 65536) % 1024;
+
+*seed = next;
+
+return result;
+}
+</code></pre><p>font: <a href="https://stackoverflow.com/questions/1026327/what-common-algorithms-are-used-for-cs-rand">What common algorithms are used for C's rand()? - Stack Overflow</a>
+This is basically getting a seed that is a integer, and is executing some basic computational operations like sum, multipling, moving bits around and in the end of the operations it will generate a number that is so different from the seed that it &ldquo;looks&rdquo; random.
+One think to in this function is that it will always generate the same set of numbers so be aware to use this as it is on production.</p>
+</li>
+<li>
+<p>srand(); this second function is actually a supplement of the other function, the &rsquo;s&rsquo; on srand means seed, different from rand where we don&rsquo;t pass any arguments here we&rsquo;re gonna pass a number to be or seed. Usually when we are working with this function we&rsquo;re gonna pass the present time as our random number, with can be done by using the &rsquo;time.h&rsquo; library in C.
+As we pass a new time as our seed every time we call the program, a new random number is generated.</p>
+</li>
+</ul>
+<p>Although this is a good library for generating random numbers, it is not very good if you need something more robust which is the case in my password generator which requires a high entropy (ie completely different numbers from each other). As I had already said rand() will generate the same random numbers(which again is good for troubleshooting, but terrible in production), and srand despite being a way to get around this, it can cause problems if we don&rsquo;t give enough space between the execution of the program that is, it can pass the same seed twice generating the same password, we can&rsquo;t accept this kind of thing ins security.</p>
+<p>That&rsquo;s why I decided to go in other route to generate the random numbers that I need on my program.</p>
+<p>OBS.: If you are interested in the subject of generating random numbers, I will leave here three videos that talk about this subject.</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=aSlkVy3mbR0&amp;list=TLPQMDkwOTIwMjIIH55doAV2ew&amp;index=4">Random Numbers (How Software Works) - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=Ks1pw1X22y4&amp;list=TLPQMDkwOTIwMjIIH55doAV2ew&amp;index=4">Random Numbers with LFSR (Linear Feedback Shift Register) - Computerphile - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=_tN2ev3hO14">NMCS4ALL: Random number generators - YouTube</a></li>
+</ul>
+<h1 id="3-devrandom-and-devurandom">3. /dev/random and /dev/urandom</h1>
+<p>Before I get on more details of this topic, I need to say that the implementation that I&rsquo;m using on my program is just one of hundreds of other ways of doing this kind of thing. If you go in a C forum you get a ton of librarys that have beautiful mathematical expressions that are used to generate random numbers, I&rsquo;m just saying that is not because rand() is not the best way that you need to go my way. Even here is a wikipedia article that shows some of the algorithms you can find that do this random number generation: <a href="https://en.wikipedia.org/wiki/List_of_random_number_generators">List of random number generators - Wikipedia</a></p>
+<p>I know that you want me to to comment the code but before that, you need to understand two files in the Linux system the random and the urandom. Both this files are tools that the OS use to generate random numbers, they are basically a pile of &ldquo;noise&rdquo; of the system write in a file, all this noise is collected from the driver and other sources since the boot.
+You may be wondering why we have two files for this on the system? random is the first file and it is being built as the system is running, that is, it needs time to collect enough noise to be used, which can cause a call to this file to be blocked until it can return a answer.
+In the case of urandom(unblocked), it stores some of the noise that already existed in the system, so it is a little less random, but it will be large enough to respond to requests that are made to it.</p>
+<p>Let&rsquo;s see how this is done in my code</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">gendigit</span>(<span style="color:#66d9ef">int</span> size){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> randval;
+</span></span><span style="display:flex;"><span>    FILE <span style="color:#f92672">*</span>f;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> list[] <span style="color:#f92672">=</span> NUM;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> pass[size];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    f <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74">&#34;/dev/urandom&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; i<span style="color:#f92672">&lt;</span>size; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        fread(<span style="color:#f92672">&amp;</span>randval, <span style="color:#66d9ef">sizeof</span>(randval), <span style="color:#ae81ff">1</span>, f);
+</span></span><span style="display:flex;"><span>        pass[i] <span style="color:#f92672">=</span> list[randval <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span>];
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%c&#34;</span>, pass[i]);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    fclose(f);
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see here, we have a function that prints a series of random digits. As you can see in the code, we have a pointer &lsquo;*f&rsquo; of type file. I will not go very deep on this kind of thing because pointers are really a long topic, but basically this pointer f to the file, is doing the same as your grandmother reading the menu of a restaurant, where she puts her finger on the first letter and is moving until it reads the whole word. This is exactly what is being done, the f opens the urandom file, reads one and pass this to the randval(random value) that is divided by 10, and the number that is returned is put in the array.</p>
+<h1 id="4-implementing-the-cli-program">4. Implementing the CLI Program</h1>
+<p>As I have said before, this is about a CLI Program and because of that, we are going to need to work with the shell. I&rsquo;m not going to explain in this article how shell works, or anything like that because for me that is just to much for one article, but I will give a brief introduction on how we can implement some functions in shell that are gonna make your CLI program a little better.</p>
+<p>If you had already used Linux, you probably have used the terminal to do an action(even if it was just to look like a hacker to your friends), so I assume that you know if you are executing a command in the terminal and you press you complete this command. And this is a really nice feature in shell, because it not only allows you to write faster but also serves to show which commands the user can execute.</p>
+<p>In shell we have variables that you can use or implement new ones for yourself. Shell works very much with the idea of a parent and child process, and it plays a lot with the idea of variables that only exist on the parent process or just in the child process, or coexist in both.</p>
+<p>When you just execute a script in the way &ldquo;./script.sh&rdquo; only the variables that are specified in the script are executed, but if you use the command source, he executes the script in the process on which he was called, so you get all the variables that are inside and outside this script. When we source the script is like we are executing it on our current shell, this is why you always need to source your .bashrc, so your current session can get all the new information.</p>
+<p>So let&rsquo;s go to the code to not confuse you anymore:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>_genp_completion<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${#</span>COMP_WORDS[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    COMPREPLY<span style="color:#f92672">=(</span><span style="color:#66d9ef">$(</span>compgen -W <span style="color:#e6db74">&#34;--alphanum --digit --symbol --help&#34;</span> -- <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>COMP_WORDS[1]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>complete -F _genp_completion genp
+</span></span></code></pre></div><p>This is the script that will be sourced, it will permit us to have auto-completion when executing the genp. This is basically using &ldquo;complete&rdquo; to call a function that verifies the number of arguments and starts some words that will be used in the autocompletion.</p>
+<p>To implement that script you just need to go in your .bashrc and put the line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>source &lt;dir&gt;/genp_completion.bash
+</span></span></code></pre></div><p>And voilà, you can now use <TAB> to complete the options that are allowed in your program.</p>
+<p>Here are some useful links that give you a grasp of what was done here, and how the source command works in practice:</p>
+<p><a href="https://superuser.com/questions/176783/what-is-the-difference-between-executing-a-bash-script-vs-sourcing-it/176788#176788">linux - What is the difference between executing a Bash script vs sourcing it? - Super User</a></p>
+<p><a href="https://iridakos.com/programming/2018/03/01/bash-programmable-completion-tutorial">Creating a bash completion script</a></p>
+<p><a href="https://spin.atomicobject.com/2016/02/14/bash-programmable-completion/">How to Use Bash Programmable Completion</a></p>
+<h2 id="end">END</h2>
+<p>So with that, we get to the end of this article. Here is the source code for this program on github and gitlab, as well as the guide to installing this autocompletion that I just talked about. It&rsquo;s a program that is working, but I know that it has a lot of room to get better, so if you see a bug or have an idea to transform the program, I&rsquo;m all ears. So take care, guys, and see ya.</p>
+
+    <a href="/"> cd ~</a>
+  </main>
+</div>
+    <footer>
+      <hr/>
+      ©Nessuno 2022 |
+      <a href="https://t.me/johnmag0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+</svg>
+</a>
+      <a href="https://github.com/JohhnMag0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+</svg>
+</a>
+      <a href="https://gitlab.com/johnmago0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M105.2 24.9c-3.1-8.9-15.7-8.9-18.9 0L29.8 199.7h132c-.1 0-56.6-174.8-56.6-174.8zM.9 287.7c-2.6 8 .3 16.9 7.1 22l247.9 184-226.2-294zm160.8-88l94.3 294 94.3-294zm349.4 88l-28.8-88-226.3 294 247.9-184c6.9-5.1 9.7-14 7.2-22zM425.7 24.9c-3.1-8.9-15.7-8.9-18.9 0l-56.6 174.8h132z"/></svg>
+</a> |
+      <a href="https://johhnmag0.github.io/license/">License <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 496 512" >
+	<path d="M314.9 194.4v101.4h-28.3v120.5h-77.1V295.9h-28.3V194.4c0-4.4 1.6-8.2 4.6-11.3 3.1-3.1 6.9-4.7 11.3-4.7H299c4.1 0 7.8 1.6 11.1 4.7 3.1 3.2 4.8 6.9 4.8 11.3zm-101.5-63.7c0-23.3 11.5-35 34.5-35s34.5 11.7 34.5 35c0 23-11.5 34.5-34.5 34.5s-34.5-11.5-34.5-34.5zM247.6 8C389.4 8 496 118.1 496 256c0 147.1-118.5 248-248.4 248C113.6 504 0 394.5 0 256 0 123.1 104.7 8 247.6 8zm.8 44.7C130.2 52.7 44.7 150.6 44.7 256c0 109.8 91.2 202.8 203.7 202.8 103.2 0 202.8-81.1 202.8-202.8.1-113.8-90.2-203.3-202.8-203.3z"/>
+</svg>
+</a>
+    </footer>
+  </body>
+</html>
+
+
+
