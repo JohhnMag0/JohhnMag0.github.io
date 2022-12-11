@@ -6,7 +6,16 @@
     <description>Recent content in Home on Eureka!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Sep 2022 13:00:00 -0300</lastBuildDate><atom:link href="https://johhnmag0.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Oct 2022 21:34:00 -1000</lastBuildDate><atom:link href="https://johhnmag0.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vim or How do I exit this sh@#?</title>
+      <link>https://johhnmag0.github.io/post/2022/10/10/vim-or-how-do-i-exit-this-sh/</link>
+      <pubDate>Mon, 10 Oct 2022 21:34:00 -1000</pubDate>
+      
+      <guid>https://johhnmag0.github.io/post/2022/10/10/vim-or-how-do-i-exit-this-sh/</guid>
+      <description>Vim or How do I exit this sh@#?  Introduction A Brief History of VIM VIMtutor Useful Commands Plug-In and .vimrc  1.Introduction If you came here because of the title, I will just answer you in the spot :wq if you want to save before leaving, or :q! if you just want to exit without saving. If that was all that you need to know and you really didn&amp;rsquo;t like how difficult it was to use vim I can&amp;rsquo;t hold you in this article anymore.</description>
+    </item>
+    
     <item>
       <title>Generating Random Passwords</title>
       <link>https://johhnmag0.github.io/post/2022/09/09/generating-random-passwords/</link>

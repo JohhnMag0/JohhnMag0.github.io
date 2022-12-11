@@ -2,19 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://johhnmag0.github.io/</loc>
+    <lastmod>2022-10-10T21:34:00-10:00</lastmod>
+  </url><url>
+    <loc>https://johhnmag0.github.io/tables/nonsense/</loc>
+    <lastmod>2022-10-10T21:34:00-10:00</lastmod>
+  </url><url>
+    <loc>https://johhnmag0.github.io/post/</loc>
+    <lastmod>2022-10-10T21:34:00-10:00</lastmod>
+  </url><url>
+    <loc>https://johhnmag0.github.io/tables/</loc>
+    <lastmod>2022-10-10T21:34:00-10:00</lastmod>
+  </url><url>
+    <loc>https://johhnmag0.github.io/tables/tutorial/</loc>
+    <lastmod>2022-10-10T21:34:00-10:00</lastmod>
+  </url><url>
+    <loc>https://johhnmag0.github.io/post/2022/10/10/vim-or-how-do-i-exit-this-sh/</loc>
+    <lastmod>2022-10-10T21:34:00-10:00</lastmod>
+  </url><url>
     <loc>https://johhnmag0.github.io/tables/coding/</loc>
     <lastmod>2022-09-09T13:00:00-03:00</lastmod>
   </url><url>
     <loc>https://johhnmag0.github.io/post/2022/09/09/generating-random-passwords/</loc>
-    <lastmod>2022-09-09T13:00:00-03:00</lastmod>
-  </url><url>
-    <loc>https://johhnmag0.github.io/</loc>
-    <lastmod>2022-09-09T13:00:00-03:00</lastmod>
-  </url><url>
-    <loc>https://johhnmag0.github.io/post/</loc>
-    <lastmod>2022-09-09T13:00:00-03:00</lastmod>
-  </url><url>
-    <loc>https://johhnmag0.github.io/tables/</loc>
     <lastmod>2022-09-09T13:00:00-03:00</lastmod>
   </url><url>
     <loc>https://johhnmag0.github.io/tables/technology/</loc>
@@ -24,9 +33,6 @@
     <lastmod>2022-08-08T21:34:25-03:00</lastmod>
   </url><url>
     <loc>https://johhnmag0.github.io/post/2022/07/19/graphic-desing-is-my-passion/</loc>
-    <lastmod>2022-07-19T22:06:46-03:00</lastmod>
-  </url><url>
-    <loc>https://johhnmag0.github.io/tables/nonsense/</loc>
     <lastmod>2022-07-19T22:06:46-03:00</lastmod>
   </url><url>
     <loc>https://johhnmag0.github.io/license/</loc>

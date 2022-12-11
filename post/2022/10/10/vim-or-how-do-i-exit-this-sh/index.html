@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+
+	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+	
+	
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple and static blog.">
+    <title>Vim or How do I exit this sh@#? | Eureka!</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="https://johhnmag0.github.io/css/theme-override.css">
+    <header>
+
+  <nav>
+    <ul>
+      
+      
+      <li class="pull-left ">
+        <b><a href="https://johhnmag0.github.io/">[eureka!]</a></b>
+      </li>
+      
+      
+      <li class="pull-left ">
+        <b><a href="/tables/">table of contents</a></b>
+      </li>
+      
+
+      
+      
+      <li class="pull-right">
+	<a href="/index.xml"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-rss-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm1.5 2.5c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1 0-2zm0 4a6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1 0-2zm.5 7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+</svg>
+</a>
+      </li>
+      
+
+    </ul>
+  </nav>
+</header>
+
+  </head>
+
+  <body>
+    <br/>
+
+<div class="article-meta">
+<h1><span class="title">Vim or How do I exit this sh@#?</span></h1>
+
+<h2 class="date">2022/10/10</h2>
+<p class="terms">
+  
+  
+  
+  
+  
+</p>
+</div>
+
+
+<div class="content-wrapper">
+  <main>
+    <h1 id="vim-or-how-do-i-exit-this-sh">Vim or How do I exit this sh@#?</h1>
+<ol>
+<li>Introduction</li>
+<li>A Brief History of VIM</li>
+<li>VIMtutor</li>
+<li>Useful Commands</li>
+<li>Plug-In and .vimrc</li>
+</ol>
+<h1 id="1introduction">1.Introduction</h1>
+<p>If you came here because of the title, I will just answer you in the spot :wq if you want to save before leaving, or :q! if you just want to exit without saving. If that was all that you need to know and you really didn&rsquo;t like how difficult it was to use vim I can&rsquo;t hold you in this article anymore. All I can say is good luck on your journey and try to use nano next time. Now if you come here with the idea of learning a little bit more about how this wonderful (but sometimes complex) tool works, you&rsquo;re welcome. So let&rsquo;s start.</p>
+<h1 id="2-a-brief-history-of-vim">2. A Brief History of VIM</h1>
+<p>VIM is actually a acronym for &ldquo;Vi IMproved&rdquo;, and what a hell is VI? Well, VI was a text editor that was created in the UNIX era, which in turn was based on the ed which was a line editor that was the base to the creation of another fantastic tool the sed but I not going to talk about it (not now anyway). The thing is VIM comes from an ancient lineage of editors, and that is why there are a lot of things that you see in vim that don&rsquo;t look quite right or look way more complex than it need to be. But what I&rsquo;m really going to try to show you is that although it seems very complicated to use this tool, each of the little pieces that make it up is very well planned, and you really need to consider that in the technological field, for something to continue to exist even after a long time is because it has managed to prove itself. So if you are having trouble to get on how to use VIM, don&rsquo;t give up you can do amazing things with it just give yourself time. Now that I&rsquo;ve paid tribute to Bram Moolenaar and given you a life lesson (which you didn&rsquo;t ask for, by the way), let&rsquo;s see it in practice.</p>
+<h1 id="3-vimtutor">3. VIMtutor</h1>
+<p>One of the first things that you need to get used to if you want to work with software is reading the documentation. This is one of those things that you really should start doing because it is the best way to learn (if the documentation is good). In the case of the VIM we have the vimtutor(just paste it in your terminal), and just like that you have all that you need to get started on VIM. At first it will look like a lot, and quite frankly, I don&rsquo;t remember everything that VIM can do and very often need to go to my notations to remember some of those things. It&rsquo;s very important that you read that documentation and try some of the commands that appear, you will not know everything but with time you will see what the things are that you will be using very often. Another great source to learn something are books, and for me one of the greatest books if you want to learn about VIM or Neovim is Practical VIM by Drew Neil. It&rsquo;s a great source of material and will give you a good grasp on VIM.</p>
+<h1 id="4-modes">4. Modes</h1>
+<p>If you followed what I said in the previous step, much of what I am going to say here you must have already seen. But revisiting never hurts. So before we get started, I need you to understand the modes that you are going to encounter, because each command has to be entered in a certain mode to work.</p>
+<ul>
+<li>Normal: When you open the file, this is the first mode you see.You can look at this mode as the movement mode, is in here that you are going to move lines, delete, copy, paste, and so on. It&rsquo;s also from this mode that you can go to any other mode. You can access this mode by pressing .</li>
+<li>INSERT; this is the mode that you are going to use to insert text. You can also do movement on this mode but in the NORMAL is way faster. You can go to this mode by pressing &lsquo;i&rsquo; when in normal mode.</li>
+<li>VISUAL; in this mode you can select a lot of lines all at once, similar at what you do with the mouse. Here,  you can use the same movements as in the NORMAL mode, but this mode really shines in copying, pasting, and deleting lines. In normal mode, press &ldquo;v&rdquo; to enter &ldquo;visual block,&rdquo; which is a mode where you can select by column, which is very useful if used in conjunction with &ldquo;visual line,&rdquo; because it allows you to edit several lines at the same time. Another mode worth mentioning is &ldquo;visual line,&rdquo; which, as the name implies, allows you to select several lines at the same time.</li>
+<li>COMMAND: In this mode, which is accessed by pressing the &lsquo;:&rsquo; key in Normal mode, you can enter commands such as the substitution commands I&rsquo;ll discuss later or the help command, for example. I&rsquo;m going to leave here a image that summarizes some of the commands that you have in the keyboard. You are probably screaming and asking, &ldquo;WHY THERE IS SO MANY MODES I JUST WANT TO WRITE&rdquo;, I know that at first it looks like a airplane cabin, and that&rsquo;s why I like to start with some history, because you need to understand that this was created before the mouse era, so the big thing about VIM is that you can do pretty much everything just using the keyboard. Again, have a little patience and you will get there.</li>
+</ul>
+<h1 id="5-useful-commands">5. Useful Commands</h1>
+<p>So now that you are starting to get use to some terminologies and commands, we are gonna do a step forward so that I can show you some commands that I think are very useful. So let&rsquo;s get started:</p>
+<ul>
+<li>&lsquo;f<letter>&rsquo;; with this command you can jump whole words to go to a certain pattern. You can go forward or backwards using &lsquo;;&rsquo; or &lsquo;,&rsquo;.</li>
+<li>&lsquo;x&rsquo;; is the same as delete.</li>
+<li>&lsquo;0&rsquo;; is the same as home.</li>
+<li>&lsquo;$&rsquo;; is the same as end.</li>
+<li>&lsquo;*&rsquo;; selects a whole word in the file. You can search for this word using the &rsquo;n&rsquo; for forward words or the &lsquo;N&rsquo; for backwards words.</li>
+<li>&lsquo;:<number>&rsquo;; with this command you can go to any line that you want on the file.</li>
+<li>&lsquo;:<number>t<number>&rsquo;; with this command you copy the content of the first line number to the other line number.</li>
+<li>&lsquo;:<numer>m<number>&rsquo;; this is the same as the other command but instead of copying you are moving.</li>
+<li>&lsquo;<CTRL-o>&rsquo;; this is actually a very cool one that I don&rsquo;t see many people talking about, if you press this in insert mode it enters the normal mode executes an action an returns to insert.</li>
+<li>&lsquo;<CTRL-o>&rsquo;; this is actually a very cool one that I don&rsquo;t see many people talking about, if you press this in insert mode it enters the normal mode executes an action an returns to insert.</li>
+<li>&lsquo;<CTRL-n>&rsquo; and &lsquo;<CTRL-p>&rsquo;; this two commands when entered in insert mode can permits you to autocomplete a word.</li>
+<li>&lsquo;<CTRL-x>&rsquo; plus &lsquo;<CTRL-l>&rsquo;; this two commands need to be used one after another to work, but it basically autocompletes a entire line.</li>
+<li>&lsquo;k&rsquo; and &lsquo;j&rsquo; and &lsquo;h&rsquo; and &rsquo;l&rsquo;; this in NORMAL or VISUAL mode are respective the arrows up(k), down(j), left(h) and right(l).</li>
+<li>&lsquo;w&rsquo;; goes to the start of the next word.</li>
+<li>&rsquo;e&rsquo;; goes to the end of the next word.</li>
+<li>&lsquo;b&rsquo;; start of the last word.</li>
+<li>&lsquo;y&rsquo;; copies. &lsquo;yw&rsquo; copies the entire word.</li>
+<li>&lsquo;p&rsquo; and &lsquo;P&rsquo;; The two are used to paste but the &lsquo;p&rsquo; paste after the line and &lsquo;P&rsquo; paste before the line.</li>
+<li>&rsquo;d&rsquo;; deletes. It&rsquo;s important to know that in VIM when you delete something is the same thing as cutting so if you have copy some word and deleting after that the word that is save in your buffer is the one that was deleted. &lsquo;dw&rsquo; deletes a entire word.</li>
+<li>&lsquo;c&rsquo;; deletes and enters in the insertion mode(very good to save time). One good use of this command is with the &lsquo;w&rsquo;, &lsquo;cw&rsquo; let you delete a word an insert at the same time.</li>
+<li><CTRL-v> plus <SHIFT-i>; when in block visual select all the lines that you want to edit then press <SHIFT-i> and do the edition that you want, then press <ESC> and all the lines that you had selected are gonna be edited.</li>
+<li>&lsquo;/&rsquo; and &lsquo;?&rsquo;; this command permits you to search for a word in the entire file. &rsquo;n&rsquo; search for the word forwards and &lsquo;N&rsquo; search for the word backwards. &lsquo;/&rsquo; starts the search from the top and &lsquo;?&rsquo; starts the search from the bottom.</li>
+<li>&lsquo;//&rsquo; and &lsquo;??&rsquo; ; executes the last search.</li>
+<li>&lsquo;=&rsquo;; this is a magical command with this you can indent all your code(just beautiful).</li>
+<li>&lsquo;.&rsquo;; executes the last command.</li>
+<li>&lsquo;%s/undone/done/g&rsquo;i; this is a important command to have in mind. Because with this command you can substitute every occurence of a word that you can imagine. So let&rsquo;s describe what is doing &lsquo;%&rsquo; means all lines, you could substitute this for only the lines that you want it to execute, &rsquo;s&rsquo; means substitute, &lsquo;/undone&rsquo; is the word that you are searching, &lsquo;/done&rsquo; is the word that you are gonna to use to substitute the &lsquo;/undone&rsquo; and last the &lsquo;/g&rsquo; means to execute it globally otherwise would execute just once per line.
+There is another commands and things that you could learn abou vim, such as registers and macros that can really improve your life. But I not gonna talk about this stuff in this article, if you get interested in this type of thing you could go to the book that I recommended earlier it goes a lot about this kind of thing.</li>
+</ul>
+<h1 id="6-plug-in-and-vimrc">6. Plug-In and .vimrc</h1>
+<p>If you already feeling overwhelmead by all this don&rsquo;t worry there is always more. One of the greatests things about vim is that it&rsquo;s very flexible and leat&rsquo;s you use the tool in the way that you think suits you the best.</p>
+<p>There&rsquo;s two ways of editing your VIM you can modify it&rsquo;s usability by adding extensions that will give to you a whole another view on what you can do, for that you can use the plug-ins, I have to admit that I&rsquo;m not a very fan of the use of plug-ins myself but if you need something more robust you should definitely take a look. And when we talk about plug-ins we need to talk about neovim, it&rsquo;s basically what vim was to vi, a way to improve the software, and althought it has kind of a war between the users of both, I have to say that if you need something more like an IDE you should definetely take a look on Neovim, and the best thing about it is that you can have both in your machine so definetely is worth while.</p>
+<p>And other thing that you could do to make you life easier while using vim is to have a good .vimrc, that is your configuration file and is with this file that you can install your plug-ins, change keybinds and things like that. Knowing how to configure your .vimrc is as important as to learn any keybind, because is by this configuration file that you can make your vim feels like everything that you want so keep that in mind.</p>
+<p>One of the things about dot files and plug-ins is that they are a complete personal thing to have and I really can&rsquo;t tell you what you should or not use. So instead of showing you my dot file and the plug-ins that I&rsquo;m currently using, I will give you some links to places that are good to start with:</p>
+<p><a href="https://github.com/junegunn/vim-plug">GitHub - junegunn/vim-plug: Minimalist Vim Plugin Manager</a> This one is my personnal favorite in plug-in management, if you are gonna use the neovim you&rsquo;re probably using other extension but this one works quite well for me.</p>
+<p><a href="https://github.com/NvChad/NvChad">GitHub - NvChad/NvChad: An attempt to make neovim cli functional like an IDE while being very beautiful, blazing fast startuptime ~ 14ms to 67ms</a> This is more a a place to start, here you are gonna find a neovim distribution that come with a lot of things pre-configured, you don&rsquo;t need to use this but it&rsquo;s nice to have a base to start with.</p>
+<p><a href="https://vimhelp.org/?">Vim: help.txt</a> again the vim documentation is one of the best places to get anything that you need to know. And this is the case for .vimrc .</p>
+<p>You could also get a better info about the options in vimrc by the command &lsquo;:help vimrc&rsquo;.</p>
+<h2 id="end">END</h2>
+<p>So we get to the end of this article. I hope that you could get a good push in the direction of how to use VIM, and from where you should start. And as always remember :wq(stay safe and goodbye).</p>
+
+    <a href="/"> cd ~</a>
+  </main>
+</div>
+    <footer>
+      <hr/>
+      ©Nessuno 2022 |
+      <a href="https://t.me/johnmag0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+</svg>
+</a>
+      <a href="https://github.com/JohhnMag0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+</svg>
+</a>
+      <a href="https://gitlab.com/johnmago0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M105.2 24.9c-3.1-8.9-15.7-8.9-18.9 0L29.8 199.7h132c-.1 0-56.6-174.8-56.6-174.8zM.9 287.7c-2.6 8 .3 16.9 7.1 22l247.9 184-226.2-294zm160.8-88l94.3 294 94.3-294zm349.4 88l-28.8-88-226.3 294 247.9-184c6.9-5.1 9.7-14 7.2-22zM425.7 24.9c-3.1-8.9-15.7-8.9-18.9 0l-56.6 174.8h132z"/></svg>
+</a> |
+      <a href="https://johhnmag0.github.io/license/">License <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 496 512" >
+	<path d="M314.9 194.4v101.4h-28.3v120.5h-77.1V295.9h-28.3V194.4c0-4.4 1.6-8.2 4.6-11.3 3.1-3.1 6.9-4.7 11.3-4.7H299c4.1 0 7.8 1.6 11.1 4.7 3.1 3.2 4.8 6.9 4.8 11.3zm-101.5-63.7c0-23.3 11.5-35 34.5-35s34.5 11.7 34.5 35c0 23-11.5 34.5-34.5 34.5s-34.5-11.5-34.5-34.5zM247.6 8C389.4 8 496 118.1 496 256c0 147.1-118.5 248-248.4 248C113.6 504 0 394.5 0 256 0 123.1 104.7 8 247.6 8zm.8 44.7C130.2 52.7 44.7 150.6 44.7 256c0 109.8 91.2 202.8 203.7 202.8 103.2 0 202.8-81.1 202.8-202.8.1-113.8-90.2-203.3-202.8-203.3z"/>
+</svg>
+</a>
+    </footer>
+  </body>
+</html>
+
+
+
