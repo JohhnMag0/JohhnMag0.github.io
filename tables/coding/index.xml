@@ -6,7 +6,17 @@
     <description>Recent content in coding on Eureka!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Sep 2022 13:00:00 -0300</lastBuildDate><atom:link href="https://johhnmag0.github.io/tables/coding/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Dec 2022 19:41:03 -0300</lastBuildDate><atom:link href="https://johhnmag0.github.io/tables/coding/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The ~~Masochist~~ Amazing World of Compilers</title>
+      <link>https://johhnmag0.github.io/post/2022/12/11/the-~~masochist~~-amazing-world-of-compilers/</link>
+      <pubDate>Sun, 11 Dec 2022 19:41:03 -0300</pubDate>
+      
+      <guid>https://johhnmag0.github.io/post/2022/12/11/the-~~masochist~~-amazing-world-of-compilers/</guid>
+      <description>Introduction It&amp;rsquo;s All Binaries Automatons Roll Out Compiling Flexing my Bison with a Calculator  1.Introduction When we think of computers, particularly programming languages, one of the first questions that should come to mind is, &amp;ldquo;How does the computer understand that?&amp;ldquo;And that is one of the questions that can be answered by analyzing how a compiler works.
+Compilers are basically programs that can translate programming languages into computer language. And that is what we are going to talk about in this article.</description>
+    </item>
+    
     <item>
       <title>Generating Random Passwords</title>
       <link>https://johhnmag0.github.io/post/2022/09/09/generating-random-passwords/</link>

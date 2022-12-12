@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+
+	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+	
+	
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple and static blog.">
+    <title>The ~~Masochist~~ Amazing World of Compilers | Eureka!</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="https://johhnmag0.github.io/css/theme-override.css">
+    <header>
+
+  <nav>
+    <ul>
+      
+      
+      <li class="pull-left ">
+        <b><a href="https://johhnmag0.github.io/">[eureka!]</a></b>
+      </li>
+      
+      
+      <li class="pull-left ">
+        <b><a href="/tables/">table of contents</a></b>
+      </li>
+      
+
+      
+      
+      <li class="pull-right">
+	<a href="/index.xml"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-rss-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm1.5 2.5c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1 0-2zm0 4a6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1 0-2zm.5 7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+</svg>
+</a>
+      </li>
+      
+
+    </ul>
+  </nav>
+</header>
+
+  </head>
+
+  <body>
+    <br/>
+
+<div class="article-meta">
+<h1><span class="title">The <del>Masochist</del> Amazing World of Compilers</span></h1>
+
+<h2 class="date">2022/12/11</h2>
+<p class="terms">
+  
+  
+  
+  
+  
+</p>
+</div>
+
+
+<div class="content-wrapper">
+  <main>
+    <ol>
+<li>Introduction</li>
+<li>It&rsquo;s All Binaries</li>
+<li>Automatons Roll Out</li>
+<li>Compiling</li>
+<li>Flexing my Bison with a Calculator</li>
+</ol>
+<h1 id="1introduction">1.Introduction</h1>
+<p>When we think of computers, particularly programming languages, one of the first questions that should come to mind is, &ldquo;How does the computer understand that?&ldquo;And that is one of the questions that can be answered by analyzing how a compiler works.</p>
+<p>Compilers are basically programs that can translate programming languages into computer language. And that is what we are going to talk about in this article.</p>
+<h1 id="2its-all-binaries">2.It&rsquo;s All Binaries</h1>
+<p>As I was saying in the introduction, for the computer to be able to execute some program, he needs to be able to read and understand the file, and for that to work, it&rsquo;s necessary to transform the file into a binary format.</p>
+<p>All the things that the computer understands are basically 1s and 0s (on and off), and the computer works like that because its hardware architecture is basically a bunch of wires receiving electrical signals, and each one of these signals is going to be read by the CPU which will perform some action. There are various computer architectures, but in a similar way to how we give a context to sound and call it a world, signals provide context, and the combination of some of them has meaning, as in the case of &ldquo;01101000 01101001&rdquo; (which means hi in binary).Some actions are performed as we give meaning to these combinations and pass them on to the CPU, such as arithmetic operations.</p>
+<p>But the thing is, it&rsquo;s extremely difficult to write a word in binary in two letters because it requires 16 numbers to be written, so programming languages emerge over time. A programming language is a method that we discovered for writing binary in a comprehensive manner. We write the program in the same way that we would write any other type of text, using our usual alphabet (but with different grammatical rules), and then pass that text to a translator, which is where we introduce the compiler. Everything that the compiler does is to get this text that you write, read it and translate it in a way that a computer could also read it and perform the actions that you are specifying.</p>
+<h1 id="3automatons-roll-out">3.Automatons Roll Out</h1>
+<p>Before we get to studying the compilers, it is important to understand some other concepts of computation. And one of the most important theories that we need to understand when we are dealing with computers is the theory of automata.</p>
+<p>This theory studies the idea of an abstract machine and how it would work. This theory is a little bit extensive to be covered in one single article, but in a brief way, we have different kinds of machines, each with a different way of executing an action. The states machine will most likely be used for the compiler&rsquo;s part.</p>
+<p>In automata, a state machine, will perform actions depending on the state where you are and the input you receive.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/DFAexample.svg/300px-DFAexample.svg.png" title="" alt="" data-align="center">
+<p>This is an example of a state machine in which the inputs are 0 and 1, and each time an input is passed in a specific state, the machine moves to another state (or remains in the same state), and the machine is in an accepted state when it stops at S1 after all inputs. These are machines that can have more than one accepted state. In more complex machines, we have a nondeterministic way of dealing with the inputs, which can be a problem in some cases, in other cases, not just the states are needed, but a stack is needed to store the inputs, and that can get more and more complex depending on the machine.</p>
+<p>The compiler itself is not tied to a machine type, but we study automata theory mainly because we use its concepts in the creation of a grammar. We use a grammar to identify states that a machine can be in and to generate tokens that can be translated in a way that the computer can follow the correct flow of execution.</p>
+<p>For that to be possible, we use the concept of regular expressions, which in a simple way can identify patterns in a string. An example of this is the regex (for the non-intimate regular expressions) &lsquo;[0-9]+&rdquo; in which we are recognizing all the patterns of numbers (0 to 9) that appear one or more times (which is done with the + symbol). With this expression, we can generate tokens that express a number for the compiler.</p>
+<p>To make this idea a little simpler to visualize, let&rsquo;s exemplify with a grammar rule:</p>
+<img title="" src="/images/automata.png" alt="" data-align="center">
+<p>With this grammar here, we are saying that every id (that in this case we are going to consider a number) can be considered a E(an expression) and as you can see going up the grammar, we can a addition on the multiplication of two expressions within a expression itself. So in a more simple way, an expression like 1+1*2 can be:</p>
+<p>-&gt; 1+1*2</p>
+<p>-&gt; E+1*2</p>
+<p>-&gt; E+E*2</p>
+<p>-&gt; E*2</p>
+<p>-&gt; E*E</p>
+<p>-&gt; E</p>
+<p>This is the way that compilers identify expressions and organize the execution of the code. I not going to extend myself further on this, but if you are curious and want to play with grammar, this site is wonderful:<a href="https://mdaines.github.io/grammophone/#/lalr1-automaton">https://mdaines.github.io/grammophone/#/lalr1-automaton</a></p>
+<p>And for the automata part of the grammar here is the graph:</p>
+<p><img src="/home/nessuno/.var/app/com.github.marktext.marktext/config/marktext/images/2022-12-12-10-19-39-image.png" alt=""></p>
+<h1 id="4-compiling">4. Compiling</h1>
+<p>And finally we get to compiling this is one of the most extensive subjects in computing and one of the most complex as well. I will try to give you a brief introduction on this subject in a way that is easy to follow without getting into too many details.</p>
+<p>So as we see in the automatons, we have a grammar that is basically a programming language. So one of the first things that a compiler needs to know is how to interpret a grammar, in most cases, the compiler passes a lexical analyzer that will identify the tokens (as we already did) and then he parses these tokens, generating blocks of code that can be read and executed.</p>
+<p>Some of the things that the compiler needs to consider when doing his analysis are the names of variables, he needs to consider the type of the variable because each kind has a different size in memory, and he also needs to know how they are going to interact with each other. For example in C a char is 1 byte, int is 4 bytes, a long is 8 bytes and so on, in addition to this there&rsquo;s special kinds of variables, as is the case of the struct that can receive different variables within itself or the array that supports several of the same type not to mention the pointers that work in a completely different way with memory addresses. Not only that, but the compiler must understand how the program will interact with the operational system, as each has a unique way of working with executables. One interesting study case is Java because this language has a virtual machine (JVM), and instead of executing directly in the OS the code is first translated in a way that the JVM can read, and then the JVM talks to the OS. That&rsquo;s a really clever way to port a code to multiple types of operating systems without having to change the code.</p>
+<p>An executable segment can be called a block of code, These blocks are basically binary blocks that are going to be pushed into the memory and then from the memory to the CPU to perform some actions. Each new function or library needs to be pushed into the main memory (usually the RAM), we can divide this memory in this concept:</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPwAAADICAMAAAD7nnzuAAACc1BMVEX///8AAAAzMzNfX1+Kiori4uLAwMA+Pj6ysrLv7+9YWFh1dXX///v///3///f///n5////AAD///D2///JyckoKChBAAD//+/Z2dllZWX//+v///RTAADp6eni//8zAAD25do5AADt/////+HC7f+h0exgCADU9/87fKVzMxer2vQSAAAAADMAAC0qAADY/v/Eq25COED/VFQAACP/6OgAAEH//9Zem8BAO0/Iy9Z7sdLt9f/y67t4LQB9NgAAAEYOAFHY7P8jIyMAWIsAADlqi7ZNAABYS0r/zMz/LS2wyOj/8dr/wMBzgJIJCQn/h4f/29v/Pj5QKgBkUUjbv5n/bGwAAGXD1e5flclzr8flyJYuWJOsgz57PyNKcKH+5bgAQIKkhFbHpGnTtoORbz45ES8AFWWui3grImzs5MuSrMGdin6qy+CHg3xpb5Sqn5DDspiFcmwaAChfNR2FUgCjz/uFo7VtfpmqeVW8hk7Gp4UqRnEAABzdroAweLc6FUNnGgAwQVqleGhzptVSeZU/JCuonZszapW0lINOMh9maHx5WlyPUwDazZ19aUmlppl+Uje6fjdkPw2DlLmdaC2QnK9wZFWfmHpcGgCkuMuslJik1uWyfk/mu5KRglQAJVlGGAB+VDIAPINJAByZr9YyGRJAW3JOPSr+zp7Vn2VKL1Dhx67/fn5vWDQtLk5+YR9kgn+SvMBiPDr/p6c6QVNSUm11Nzm439blyK4AI1MsJTWXnppgMwCxnHwASWo4FQA+TxlULD5rgGBGb4p3aTzAuZY7JABBTIETKj/byZFSQwC9t5V5Vk9VKgA0AChjX3ktADze9+j/AAAX7klEQVR4nO2djV8TV7rHn6kTTCQziQmFmAiOJBgKCloVJKHVlFItY1pbsw3FlgjkiuFFiKhgIlYFCVJBFomIigpNad2sdGvr3Vik3l53a/fWbvdPuudMEgg01IyYEFJ+H03mTGaY+c55f86Z5wAsa1nRkqwIf1IKw6zwH0Mi6yEp+qJqG4LhD+SLekMxVfFh6ezwIek8Ryagig/bGutAWd8AaXbSnI7gcRjJdsTWeELWZNSCuAnt8aJgXVqTUQ/QTKJP75F/rkk2atV2z2ITLEDFR+tk6zS2Fh0cO65ed0KPw+s16AcHUZfW0ipvK4RzBjZ12HGqTpmKgjo42QEOp95xyl1kLQVJfeZiEyxAONm/lgNtOmpDDryWxSX713PQDwU7peJXsqD9tPIToVBoLtgllZzJgfZydW4GKN/PQmFgJwxs3WIDLER+eGpUB5aztZUovEsegN8ul3DwGJPbT3PwxUQ+qPoRPCoYT5Y7zIsNsBBNxzycy+fCITFPfYzhJWs7wNeAHoGYgxef0YFyv4F7JOz7lYt8+wuSuGZjA5NabvulUz9IEEQl1GxqYN4qRZVfDdFgSy0UtTn13jyiU1+ztcG2rlBlLdEz578e8lC9xHV0+rmGxQZYiKj0dL0oPR39k3Shr26DPxz6gx5E6VKxPyhJT5cCLUjHP6OD6GtLubgLkcWF0kESHxiJoHkp13OhUnUbSdLw7ONmpL5Q+gdqEC1rWcta1tJRyssvRV1v4AsxcWgSSSJWrYiu1rxE4Aux9T3axYadqyQiPdqXIAn/98imQJuB/VTzO4crP43ZQ0oiBNG+RBAeLpb4v5nUnN85nE6KmdUslvBVBAdNwRkNFdhFTX/MVphdUVAs4T8iUMNfXNVqz9VUEW5pL0EcudRXCMpVl46aJdZDTbUlzZd2aDYTWmDsk9/9XtZ4QYohvOo1DN9eCJK3NOL+LLAcry4B9ruM9tPw53KwvKml1h6HGx3KVC205YD3erTvK6bw6lSU7GVPUX//TA74nPJ6+eZSYLZkANM1UIpNKPTaHLhTrlyvVX4SmzIvhvDFxMZ8UKIoR3ke6P7Jy+CHH3FJT07Dn+Tg12YBFfVaKKbwyrWH0afDKVW91SEF01ZNAL6qEAYxPIiDMQ83nEUpw9G+r9gWeCc/QJ19Va3RPeqRAmsE5kpPUdMqj+U+OdSjmPq2zLS71WY3Tu6+DJJzKztjYBiIDJ5qXoA9ehqevqqb2esre/6/+KIUGTxjLX3+S0zDA13v1vu3vMk9AfPYdI1OzQ7GQhEm+xo+8Hv27gkNzsCDrXHYn5ptwsBToAYLuW9JM4GTgilXB7FTpPBHmlBzBK5Nni8DR+tAOTg2XSPXzVMVr377T6HBGfgbB+a/Aj3K5YO2eIR3ytkfMkYeC2/eEtzOtxwG9kcPfLkzbCt82+pXt4WGp+HbN2YCLRSaxcJhKSsU6mXDjFCaYsDpYFiqGi1rHpbicSJU76OSnplU6BfI9kxFCI8rpXsZH3lEIimoks4dAnaLAZTrwzZB977611dDw0F4+uoY+jSd0oAji91tqDpdvTXZ2Hy7ECwH5YMdqoEeww0XIHj2MlhL2VbxjeMLZHum+MGXA4iYpw2WXX74vLANsb3vfhMWviB3Z4Y/edfLGbe8fUx5VMulc18ddaOSHigD5WdaFHQ8JhtbBefNal5W8+cRL3gLUWZzF+/M/PIDEXuhASrCZ+Ft760OW+AV5BE4pdQcKEBNfJuxdkz5nwygEC3V7G6rxA9FfOY6Clq5GDd9Ph71sZ8Iq7or4+amlZeh++Vxg6zPeGnHMPtFT2PrfJlyVpYPaeERGEv58HEm9Dozv+TgccxXu+COP+b/komCVS6AFIFeZs1eCFgket4WHk72EWq6wBskuLGsdgTVO6GvOlyMOq+q0UKocam+cglQE7dNR+M8v378isf2q94R9ZGv54ePeBg+xJjBJWjGgM01QoVQiAp5m1BokAmHUb0vRvUAKvdRA4ARFoGEEUa/cf+c8OKmSXek1qYZY8auOBvBjWHHhs3NivaleCp21lvvhbibtpBE8B2CWMl7zIKD97pFi836G/EetFhFrHyuQYt4FO9kLyBSeF6CjGN4ngWeYhmej5bh41LL8Hy0DM9Ly/BxKZ7wkyJcz6ev5HNOwsCT76whhMnEGl7nJAq86B0Ci1erMGHgYRKz84r4BIJPwfD8TkkceFiJ4PmdkUDwKOqF/M5IIHhY9Q7PExIJPmWS5wmJBA98zVEJBc9XiQm/bW9EhyUk/L7Vq9+N5LjEhN/z7qvPPipB4WHv6r9GclhCwu9995v3IjkuIeG3vbc6ohIvIeHnTkKYTwkKH5mW4eNSy/DRVSLBC/6wpmukZF52a0goeAHBd9QigeCTCYJn1CcOvID4AxswOdM1P0NW4sC/TPCO+oSBTyJeWsU36hMGfmUSrHmZJ07CwCMheH4G3ESD56Vl+LjUMjwvLcPz0TJ8XIr/ywYJBN9F+KcYRax3CJ5nvMO3IxQr0dazxJrkKGtlnMJXHyyKnYekOBNLFKb8YQ2YI4kPr5z3PXQHkZ3gpmv63Lwvfo4Qh5cuvHf9ZfLqh8CuGnoz07FpiGioGL9bKrLeau4r8Q5NaIEh+yrB8UaPhjFeqRRZD3+1U2a3/23mDWALsf3rJQtPHysF9qjhZDlcPK6+oAPxWq3lgb7ilkGVWgY3dGm7hT8Tx5X7zfQ94c+5x3u3G6CmA5pn4JVvHVq6MS85VgaSj7OA6XrfI/tBg55Gyrlb+uInUlmqBk52FB8QiURSBF88hjeKx6TAvD+umDlfvMG15OFHOvUXPWkIXtY3zD6YgbfskgOtR/AW7KlDj+GlkqmNM6+0FhOG54anHEfm8WG055vZ4ajBd4DlfuaoDo5xMV9AZFhu6XufgIqDT3uYnd6tQfCq1yvTu3Ow63ZHTogzFuZpGa+OjTq05KRqxuaBf2/ONKVowQ/eJ5MNYBonb/Y07TbqaWtr00qy/tsGx/lS29PHembgVBZQtT1meuCUTjK0ow5S7OTlwMmqblz0RQgvThdJaatHBJJ0bL8TpUuxGzORKEzzcM/qP83eEcVkvwB5V5gjhe8WVnV477YWpdmF/R3gJZsntAi+fXsY7wavvj1nmlLs4cXXAoU604XbOLJrhjAHWSLN86oftMoysJaB73tp+wF4JQOStMVjNneYhL/t1bdXh3cY8mKl7Jok53MZKO7y06q6N+INU25Yh6OvRdrCayc65WIED2lk/4ECzjNS8VEi/MX3zpmdFxV4qjYSnx3sDgwv3hAOXp0aYSOH1stuOqUI3uLMbD+gztWAylA81rszIh8YLw6erie3mNXnDoLpL0Of9zSAyXiF86fPjP5UltZfaum5UgpTT24e6j2fhX/zALtF2LhDK0HwdBd5Vo/On5zOARZiV2Twsk8z2Ptya5moxgUnD8CgM6nLXHwYbrgicRry4uB9JXDyNFg+APF///2pGXwuqcRazv3g1FPXMjfksBOGio1mkfJqFvu59ssxYD8fhopDgOAdbsVXp02lIU28EeJgZMkePTfSAL5kM9tovNRjps6t8ojq15R5Vxgznn3yi4MXC1JGKzG8hIOvLgSoeIDvgP44i60DRlH7wIArdLzgTLqi7RCX7NXr8jfkqK4MKxR65sdOwXQx5SCWVguP7Slqr5yJ+Y+yUclzi8t6Na5LBmrKzewIwsvq63y7/PB5KEkov0BNO0rKVL057ctsqfXnN2fDHQS/E9S3v96Pkv0mLe6sYKUNVOImHkr2GJ56Jaf4kPxLFPPfGaCiEif7KqeBdXvNqMcT/GNs3tKCt0yQNycaKKtx8mFn37gZ2s82nggkY0cDUMc6h94wDhE6MOV1pre0Dm2tk0zdJ0m5KbdTrxolvs/0PiVD/HmNRFjgLUhxasZC5QXP92KfR3ELDymESxhlrYhb+CR+QxbPJ+5K4u6/xcCJMS8lEQpRlDWd7EWoyF1U2LmKbT1fvTUGjtsjV2zh6YGNMfDZH7HCwnuDnq1pu2ZWWG03QPdcz242e6B3Jw7vETu0tL9DlMTROq9h4afXnBEL9SApmgl783IgZU6+FTcHPcCy5wIuO5Wz1qwJha8htoZ2RdO6giHvzHNT28N0lcXNUfCm9+xk7wtZdzF8z/hq8GZ9Afg7s1x3hsKfJIhQf87e9QHniLbRaTeylIkIkzWY/sJn3OdzKAAvq91k8D36kBk40nS30DaQzXzlbOrLRhGVw1gn7P+TDfSU8YIH6A05vnU6mCIn8zpU18hNBrz/01wO3tdD3s4WTyVf8PgGxofF6Hh/s3sW/ChBlIdcHS956Vf7jA9dbH39rRzRgwc16v+0fQjVJXL2LxkOhO3Us+u1srU52LUvCvvOZo4cwPCSNh0owOSUO4xJX5VAlQ71GTG8bL8BarJtZ+UI4yMPMN9lfDnmv0QIvLIlCE81J9vrhsV40KGxccIA7SVdfZVSS0+jSy7zwyvtkxMGSdWTn/tcYOohW6IP719ooT0b/lUJkttaehoeVMLRgxieM30rz5tVV8x4ROQHDYi5ZN/7RIqTPSMc5eBBlTT6W3hfXjDZM1sMakKL4NP6NTDizGx36uGY7uJxZYs5AN9+Gi52QMV2A/XW3+/roW2x4FGYXWEemYGvLoS0/jLUbFF/dj0AX4E61r5stgcfhuDZNWbUpZwL780ltvoLLuZejjpXK/k4q3hXJupy56B+Oko4EkX9G0F4sUCIFzkZk8KZ/y2NcrL/QSMbzZbOgv9FK56O+X85pe0HuQIPwVuc0rQixwOz9zIMVgKTim3I7KMycJRMuaAdw1O9T+Qjh6i58CaC+ClQWZiM9dxwkwV1ypWfaXCeryl0tKb3B+F94/o/lwfgO6VRhUfZarLepejDPq2NV8aL+r41N39RajrfKmX3N64YN7P7jUM7GlDYu/+xwTpO1nuo2ncey0H51Oi+4MGdau8O0j6esoI7bHyYvYI2hufC+3IJp9/oyX6qFYlwgSd7iB6mS3qnBMSjf0/VKC+YaQ5ebP2QW+QE5Z0zX6NCoS0Knq9j1sLb9s02lL5+IQIVZxoq94lK76PHeuYeHnVCD8veAFXjTV8YL+Vxa0iYJsh/3C+qmmjwPuqcOks+db14X/8xg3979Wr0WR2EZ3GqqF/kdVxjBr8HVu/Djfs3/Xn+TrbU/wAWU7Hr2PiXO5AcCzTuvSS56Gu1x8zX9d6ApwHV1Nm4Wa0yiXhpZZTF+bre9t7bb+/zX9L7RSRDHbFQErEq2vL7ut62zT92y/Z1hs9oynuhnTnK9mv0l22L4QKdnJiHofV1SrD6sumBTgnt6Yu900ulJEXtzmI8XMU8fBDgFYtQcb9DIPVv7C7y13oiUfBXUYsWJDjou4V3R6VSnA0vqQ80PoNzG4LzD/DkBtm1uSPS3mBdZRv+nZsLhb8RrOfpa8J/mGs2ubW2Xy9t1Zq+cwuqCC3UTo524vhn7O6np7TKNZPny8TVO4W9R4ac0VgRYg58VxAebVAKdBcBKm9eFsi65twA2xdIwuyV4Fg1HaYkD4FnHwXhbZVgOV6AksGNcrjowd0qZarW1wkyIf5LN7KA/Sx/pIQbmjsErx1XfhHx+iE89DvJnnXObFOvhFuPYiSYf32PA/AjYVY3m92rC0ShZJAYBjXOAwz5vh9+ff7mwNnqT7S4TwksOcrBg9f+XfThe3M1vi3Cpi2a3nVZtPWBW3XTJWeTG52ZkleyJP88ml9DTraUAnWN/NYMtmSyhYNnk8l7j6X4MDlz96zwn8a7HfPBz/TqxOD7UYdjHvUYLwbha0qkIEPPQ71Og+DzK76X+2N+tC5tf/ThlW/lsC2XUf9deTULLAeBcrikJ8vh9eNiFPO2dVoF2NBtmloVVqfoigGqMTzdnwM1gcOgujSNmxIxDzyK+VP+/rzNDe3lBTv1qlEd/bqH3WHQq9fns3mXU67hAhF3lNd5NmfDjUq95QM1oWG/K4rCGmaz4em1OaqnDTg5I9iKgyiqXHKJoOt9D4Zn12tB1V8GVJVHIUjHlhsu2eMBcd9jqUTR9WMZgvdPiZgHnv182pLTTbqBqjXqfT3uoR59t1HQvKoOvPvHuRhOs5Nuexm7hhzqMavOuaeMk40RL5uzUHhHNjUDb2oVXJyGxysWiq0ePAHTKffDV+zKxPDosGMeHPP2Yd+88DM2vLjQbHjx2hx6JubHQGpy4bWDL3qAg89nz2ai8nxkk5l12/LMMFKC0iKbWgY+p6rlOnUMxXx58WH5l/PCw2Acw5vyCps/NwqeTkw+6tSz94yqvp8aapzk3fuXbneKpnJ1g2fJehT3tcT3KOcfJe3f40TqPTpp/8nMHab1fdv1hXFo06z+2u/Y7RdZMW7hzRmxWWTFGP4kUTn/gTFXbOFlD29FfdVNHoopPFX1ZmyWF49QMezSUorRx/EU70AJ+S7cxVvBhbvEUycUz7ib2Mpnf8x7yTbeeiM+Z2P5NulT/qjz8NI26BLbE6KXsy54ww4PVBD83q56Ti0aPDPA2QfCwzuIwoSGh81hTCtBjRCnEwVePHXEay+0NfZolY2N43qgHOSvWth8pNleJ7tZKJ5qbbafQPU6uWa6cW0hDiYKPFXzplmZVweDWXdOY6OKQweOD2Gz02D7JLMqm6p6YGbz8n1HBFO3gnZIZWrCwEPxE/C/Q8sIkt730Pe4+Q3+5cMDUy2u5leXpqQogmZmydrEyfO9T6RpHLyvx/xnj6yFs7fOgf8otAiouCVPGPhi/AKxFk7qRq9j28tgiZx2z4Wv2GSm6/2dC3GzUZ8wHo9p66YGE1Foe+iaetD1f2cNsofETgPzjwlzN3Fi9Keirx6Ym4lyqCWIwCRKrxHPI+IFb/H8XnBG+2a9ShyfLTyHS8oLnrndWgSSLqGeEQoFl4a5YDjtWz3rJfL4hFem8mveij7ygIzUmw7LTzpVPQbaOk/M73s3BvC2HyIwDUj65134nN7As6pD8Kb7JJlskIx2GoCyzvcO955ZL5FHB14smDU2qvptG1aNbi99XgMC70YOgg+0GE0TBhAvKrwkXQq0nhbIgVaIpJTDmU4JJAKBnhKgp4I/aOtlEYj0+DGhPXS6RCFHiVcR9F06Qrh4w1cgap9B7Ublxfzw+2Z5zYgKPH1zaz4zMD451UnVp1iP01XOopvb+zberYReIgNqv25z2e62Gky5OpBUDU+VCKyHL/18K5Mhk/oC49AjBM8u7UelCnr0p+RSeGpQ/lIqtuoUkcwZiE7Ms/+lhepKYHZkfJLJluFJsgWEFmoqQfnvDF8nqIq46c/9OmgvBBgsx+/cbtCYKqWWQOued5eWEaLEnpQkRd+owNfjYASKUoGH4P0zhe8QqM+C4bdnYnj1vzP8eRPBi/t1lPVDgBqnbUyK4OnBU9PjKYPZS7eRMw2v1bNfVYbAK9dn4HFEVu+HB+tpQC28Yg5ehAfGg39hsHR4qcKz/87AY8Io5n+VmrIRPK3emgkVTqmJqGPXdSaRmYMeEXycBSyhEZ/LsYwBbMjxXYb2meEyds0ShVc1JdexjclFTcknmkm3Hph6d3PyCbSbTLGbgbEbOV8H3mTUhPclk6hNnzzsTXYLumdN+1xSr5C/aMV6Hl5cKSlmgxZxqJSXoz5o8dIbiw25rGUta1nLWtayQsR+Gk/eHWIsW15Y34F/DEnWzsBTgf8Q8h3YoCCs5tm9VIRfHZdMuQfK2TxX2sfbDcwvwwDeR8auX75uulkpBZu73tX8yN111R9kkyfPl0mqdlkJwqlVP+x49gXiWRgeO087c7zCJS34T6bEjXZS1mwwPdCrLmihRXhpvc5aCqZbcma3VvyaBjtfKz5lAJNLSpOLffcLFIKX9V8HqHYpt2hNK3U+bPunqnRgGperWgwFh0UikFQ1YFZmv6GAyADlgK5glxRkLVmWxX5DdqFC8GkDOm6M90bpsGWsC1tpOXiXnEHwp7QgFnFBP7wGVE8bCnbJATsgji8XUPyFPSaM3MoQ92vAdtQs2eC3e/nhUczDxRJF8/U2LubZ/QZsCGV7MjmPsGkDcTSf/vlk2t2qB0dPYwP24yOHbr8vmP09Avuq4ebdl4EefVnn3W8UXFlVhIPicyRpkExtOYGO6o6jKeWxljIa78IsDSkbe6LgxWmJSCaMZqL/f+TWKI0z0yeaAAAAAElFTkSuQmCC" title="" alt="4.6. Memory Management: The Stack And The Heap" data-align="center"> As you can see in the image, we have the global and static memory where we can find the main function and some global variables, and then we have the stack and the heap, which is where we are going to push the functions and other dynamic variables.</p>
+<p>Another important process that is not the compiler&rsquo;s responsibility but that we ended up associating with him is the linking process, which is when we get a function from another file and push it to memory to be used with our program or the so-called libraries.To make this work, the compiler needs to leave blank addresses that are going to be picked up by the linker and associated with the right library.</p>
+<p>This topic is very complex and has a lot of discussion on each subtopic. I&rsquo;ll give you some links to other places where you can read more about it and understand some concepts in greater depth:</p>
+<p><a href="https://akkadia.org/drepper/dsohowto.pdf">https://akkadia.org/drepper/dsohowto.pdf</a></p>
+<p><a href="https://www.lurklurk.org/linkers/linkers.html">Beginner&rsquo;s Guide to Linkers</a></p>
+<p><a href="http://www2.hawaii.edu/~takebaya/ics111/process_of_programming/process_of_programming.html">http://www2.hawaii.edu/~takebaya/ics111/process_of_programming/process_of_programming.html</a></p>
+<p><a href="https://www.amazon.com/Engineering-Compiler-Keith-D-Cooper/dp/0128154128/ref=zg_bs_3970_sccl_6/130-6334203-3969022?psc=1">https://www.amazon.com/Engineering-Compiler-Keith-D-Cooper/dp/0128154128/ref=zg_bs_3970_sccl_6/130-6334203-3969022?psc=1</a></p>
+<h1 id="5flexing-my-bison-with-a-calculator">5.Flexing my Bison with a Calculator</h1>
+<p>For you guys (and for myself too) I made a little program that will work as a calculator with Flex and Bison. &ldquo;What the f@$k is Flex and Bison?&rdquo; you might ask. &ldquo;Be patient, young padawan. I&rsquo;m going to explain what they do and give you my little program so you can play with it a little.&rdquo;</p>
+<p>So starting with Flex (the fast lexical analyzer) he is responsible for getting a file, analyzing each word, and returning a token. Here is an example of part of the code in my calculator:</p>
+<pre tabindex="0"><code>&#34;+&#34; { return ADD; }
+&#34;-&#34; { return SUB; }
+&#34;*&#34; { return MULT; }
+</code></pre><p>As you can see, we have three symbols: the plus, minus, and asterisk. Each time one of them is found in a file that is passed to the flex the ADD, SUB or MULT will be respectively returned. As we pass these values to our YACC (yet another compiler-compiler, in this case the Bison),</p>
+<p>When we get into the Bison, what we get is the grammar part and some other code parts that are going to be executed as the tokens are passed. Here is the Bison part of the calculator:</p>
+<pre tabindex="0"><code>int_expr: I_NUM { $$ = $1; }
+    | int_expr ADD int_expr { $$ = $1 + $3; }
+    | int_expr SUB int_expr { $$ = $1 - $3; }
+    | int_expr MULT int_expr { $$ = $1 * $3; }
+    | P_LEFT int_expr P_RIGHT { $$ = $2; }
+    | SUB int_expr { $$ = -$2; }
+</code></pre><p>Here is the grammar, and as you can see, there are two types of tokens: the expression (in this case, an integer expression) and the operation token, which will define some kind of arithmetic operation.</p>
+<p>So we will compile (well, if that is not ironic) these two programs together, and we will have a program that can read and execute the expression in the correct flow of data.</p>
+<p>If you want to see the whole program, you can get the source code here:<a href="https://github.com/JohhnMag0/Abaco-Calculator">GitHub - JohhnMag0/Abaco-Calculator</a></p>
+<p>The documentation of flex and bison is not very good(for me at least), so if you want toy with it a little I recommend this book as a entrance in this world <a href="https://www.amazon.com.br/Flex-Bison-John-Levine/dp/0596155972/ref=sr_1_1?keywords=flex+and+bison&amp;qid=1670848361&amp;sr=8-1&amp;ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9">https://www.amazon.com.br/Flex-Bison-John-Levine/dp/0596155972/ref=sr_1_1?keywords=flex+and+bison&amp;qid=1670848361&amp;sr=8-1&amp;ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9</a></p>
+<p>For the ones that don&rsquo;t like C(you guy are monsters) there is other types of librarys that can be useful for you that are write in other languages. Here is one that is written in python is a little old but is good enough:  <a href="https://www.dabeaz.com/ply/">PLY (Python Lex-Yacc)</a></p>
+<p>And if you are really hardcore(<a href="https://www.youtube.com/watch?v=b-HbPN6n2Gc">Jorge: Quiere ser hardcore y su mama no lo deja - YouTube</a>) and want to go all win writing your first language(because why not) the lvm has a great documentation on how to start [My First Language Frontend with LLVM Tutorial — LLVM 16.0.0git documentation](<a href="https://llvm.org/docs/tutorial/MyFirstLanguageFrontend/index.html">https://llvm.org/docs/tutorial/MyFirstLanguageFrontend/index.html</a></p>
+<h2 id="end">END</h2>
+<p>The concept of compilers is an extremely dense thing and you can really go down a rabbit hole when studying it but I hope this article has shed some light on what it is and where you can start. Stay safe and goodbye.</p>
+
+    <a href="/"> cd ~</a>
+  </main>
+</div>
+    <footer>
+      <hr/>
+      ©Nessuno 2022 |
+      <a href="https://t.me/johnmag0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+</svg>
+</a>
+      <a href="https://github.com/JohhnMag0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+</svg>
+</a>
+      <a href="https://gitlab.com/johnmago0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M105.2 24.9c-3.1-8.9-15.7-8.9-18.9 0L29.8 199.7h132c-.1 0-56.6-174.8-56.6-174.8zM.9 287.7c-2.6 8 .3 16.9 7.1 22l247.9 184-226.2-294zm160.8-88l94.3 294 94.3-294zm349.4 88l-28.8-88-226.3 294 247.9-184c6.9-5.1 9.7-14 7.2-22zM425.7 24.9c-3.1-8.9-15.7-8.9-18.9 0l-56.6 174.8h132z"/></svg>
+</a> |
+      <a href="https://johhnmag0.github.io/license/">License <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 496 512" >
+	<path d="M314.9 194.4v101.4h-28.3v120.5h-77.1V295.9h-28.3V194.4c0-4.4 1.6-8.2 4.6-11.3 3.1-3.1 6.9-4.7 11.3-4.7H299c4.1 0 7.8 1.6 11.1 4.7 3.1 3.2 4.8 6.9 4.8 11.3zm-101.5-63.7c0-23.3 11.5-35 34.5-35s34.5 11.7 34.5 35c0 23-11.5 34.5-34.5 34.5s-34.5-11.5-34.5-34.5zM247.6 8C389.4 8 496 118.1 496 256c0 147.1-118.5 248-248.4 248C113.6 504 0 394.5 0 256 0 123.1 104.7 8 247.6 8zm.8 44.7C130.2 52.7 44.7 150.6 44.7 256c0 109.8 91.2 202.8 203.7 202.8 103.2 0 202.8-81.1 202.8-202.8.1-113.8-90.2-203.3-202.8-203.3z"/>
+</svg>
+</a>
+    </footer>
+  </body>
+</html>
+
+
+
