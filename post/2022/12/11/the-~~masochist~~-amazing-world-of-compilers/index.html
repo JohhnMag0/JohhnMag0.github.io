@@ -87,7 +87,8 @@
 <p>The compiler itself is not tied to a machine type, but we study automata theory mainly because we use its concepts in the creation of a grammar. We use a grammar to identify states that a machine can be in and to generate tokens that can be translated in a way that the computer can follow the correct flow of execution.</p>
 <p>For that to be possible, we use the concept of regular expressions, which in a simple way can identify patterns in a string. An example of this is the regex (for the non-intimate regular expressions) &lsquo;[0-9]+&rdquo; in which we are recognizing all the patterns of numbers (0 to 9) that appear one or more times (which is done with the + symbol). With this expression, we can generate tokens that express a number for the compiler.</p>
 <p>To make this idea a little simpler to visualize, let&rsquo;s exemplify with a grammar rule:</p>
-<img title="" src="/images/automata.png" alt="" data-align="center">
+<p>E -&gt; E + E</p>
+<p>E -&gt; E * E</p>
 <p>With this grammar here, we are saying that every id (that in this case we are going to consider a number) can be considered a E(an expression) and as you can see going up the grammar, we can a addition on the multiplication of two expressions within a expression itself. So in a more simple way, an expression like 1+1*2 can be:</p>
 <p>-&gt; 1+1*2</p>
 <p>-&gt; E+1*2</p>
@@ -97,7 +98,7 @@
 <p>-&gt; E</p>
 <p>This is the way that compilers identify expressions and organize the execution of the code. I not going to extend myself further on this, but if you are curious and want to play with grammar, this site is wonderful:<a href="https://mdaines.github.io/grammophone/#/lalr1-automaton">https://mdaines.github.io/grammophone/#/lalr1-automaton</a></p>
 <p>And for the automata part of the grammar here is the graph:</p>
-<p><img src="/home/nessuno/.var/app/com.github.marktext.marktext/config/marktext/images/2022-12-12-10-19-39-image.png" alt=""></p>
+<p><img src="https://johhnmag0.github.io/images/automata.png" alt=""></p>
 <h1 id="4-compiling">4. Compiling</h1>
 <p>And finally we get to compiling this is one of the most extensive subjects in computing and one of the most complex as well. I will try to give you a brief introduction on this subject in a way that is easy to follow without getting into too many details.</p>
 <p>So as we see in the automatons, we have a grammar that is basically a programming language. So one of the first things that a compiler needs to know is how to interpret a grammar, in most cases, the compiler passes a lexical analyzer that will identify the tokens (as we already did) and then he parses these tokens, generating blocks of code that can be read and executed.</p>
@@ -127,7 +128,7 @@
 </code></pre><p>Here is the grammar, and as you can see, there are two types of tokens: the expression (in this case, an integer expression) and the operation token, which will define some kind of arithmetic operation.</p>
 <p>So we will compile (well, if that is not ironic) these two programs together, and we will have a program that can read and execute the expression in the correct flow of data.</p>
 <p>If you want to see the whole program, you can get the source code here:<a href="https://github.com/JohhnMag0/Abaco-Calculator">GitHub - JohhnMag0/Abaco-Calculator</a></p>
-<p>The documentation of flex and bison is not very good(for me at least), so if you want toy with it a little I recommend this book as a entrance in this world <a href="https://www.amazon.com.br/Flex-Bison-John-Levine/dp/0596155972/ref=sr_1_1?keywords=flex+and+bison&amp;qid=1670848361&amp;sr=8-1&amp;ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9">https://www.amazon.com.br/Flex-Bison-John-Levine/dp/0596155972/ref=sr_1_1?keywords=flex+and+bison&amp;qid=1670848361&amp;sr=8-1&amp;ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9</a></p>
+<p>The documentation of flex and bison is not very good(for me at least), so if you want toy with it a little I recommend this book as a entrance in this worl <a href="https://www.amazon.com.br/Flex-Bison-John-Levine/dp/0596155972/ref=sr_1_1?keywords=flex+and+bison&amp;qid=1670848361&amp;sr=8-1&amp;ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9">https://www.amazon.com.br/Flex-Bison-John-Levine/dp/0596155972/ref=sr_1_1?keywords=flex+and+bison&amp;qid=1670848361&amp;sr=8-1&amp;ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9</a></p>
 <p>For the ones that don&rsquo;t like C(you guy are monsters) there is other types of librarys that can be useful for you that are write in other languages. Here is one that is written in python is a little old but is good enough:  <a href="https://www.dabeaz.com/ply/">PLY (Python Lex-Yacc)</a></p>
 <p>And if you are really hardcore(<a href="https://www.youtube.com/watch?v=b-HbPN6n2Gc">Jorge: Quiere ser hardcore y su mama no lo deja - YouTube</a>) and want to go all win writing your first language(because why not) the lvm has a great documentation on how to start [My First Language Frontend with LLVM Tutorial — LLVM 16.0.0git documentation](<a href="https://llvm.org/docs/tutorial/MyFirstLanguageFrontend/index.html">https://llvm.org/docs/tutorial/MyFirstLanguageFrontend/index.html</a></p>
 <h2 id="end">END</h2>
