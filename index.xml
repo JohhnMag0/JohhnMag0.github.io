@@ -6,7 +6,17 @@
     <description>Recent content in Home on Eureka!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Dec 2022 19:41:03 -0300</lastBuildDate><atom:link href="https://johhnmag0.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 10 Jan 2023 21:29:04 -0300</lastBuildDate><atom:link href="https://johhnmag0.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Compiling the Linux Kernel on Debian</title>
+      <link>https://johhnmag0.github.io/post/2023/01/10/compiling-the-linux-kernel-on-debian/</link>
+      <pubDate>Tue, 10 Jan 2023 21:29:04 -0300</pubDate>
+      
+      <guid>https://johhnmag0.github.io/post/2023/01/10/compiling-the-linux-kernel-on-debian/</guid>
+      <description>Compiling the Linux Kernel  Introduction Preparing the environment Compiling  1. Introduction In the last few months, programming aimed at more obscure areas of computers has piqued my interest.And it was through these studies that I discovered the field of kernel development, and there is no better place to study kernel than the Linux kernel itself.
+But first and foremost, in order to learn kernel magic, we must first be able to compile one, and this guide will show you how to do so in a Debian system.</description>
+    </item>
+    
     <item>
       <title>The ~~Masochist~~ Amazing World of Compilers</title>
       <link>https://johhnmag0.github.io/post/2022/12/11/the-~~masochist~~-amazing-world-of-compilers/</link>
