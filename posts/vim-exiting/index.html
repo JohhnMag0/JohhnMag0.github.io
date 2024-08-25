@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Liste - https://maverick.canhtran.me">
+    <title>Vim or How do I exit this? | Victor Briganti</title>
+    <meta name="description" content="A blog for building knowledge">
+    <meta property="og:title" content="Vim or How do I exit this?" />
+<meta property="og:description" content="Introduction A Brief History of VIM VIMtutor Modes Useful Commands Plug-ins and .vimrc 1. Introduction If you came here because of the title, I will just answer you on the spot: :wq if you want to save before leaving, or :q! if you just want to exit without saving. If that was all that you needed to know and you really didn&rsquo;t like how difficult it was to use Vim, I can&rsquo;t hold you in this article anymore." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://maverick.canhtran.me/posts/vim-exiting/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-10-10T00:00:00+00:00" />
+
+
+    <meta itemprop="name" content="Vim or How do I exit this?">
+<meta itemprop="description" content="Introduction A Brief History of VIM VIMtutor Modes Useful Commands Plug-ins and .vimrc 1. Introduction If you came here because of the title, I will just answer you on the spot: :wq if you want to save before leaving, or :q! if you just want to exit without saving. If that was all that you needed to know and you really didn&rsquo;t like how difficult it was to use Vim, I can&rsquo;t hold you in this article anymore."><meta itemprop="datePublished" content="2022-10-10T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-10-10T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1963">
+<meta itemprop="keywords" content="tutorial," />
+    
+    <link rel="canonical" href="https://maverick.canhtran.me/posts/vim-exiting/">
+    <link rel="icon" href="https://maverick.canhtran.me/assets/favicon.ico">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link href="https://www.google-analytics.com" rel="preconnect" crossorigin>
+    <link rel="alternate" type="application/atom+xml" title="Victor Briganti" href="https://maverick.canhtran.me/atom.xml" />
+    <link rel="alternate" type="application/json" title="Victor Briganti" href="https://maverick.canhtran.me/feed.json" />
+    <link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=">
+    
+    
+    <style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding:2rem;background:#0a0909;color:#fcfcfc}.skip-link{position:absolute;top:-40px;left:0;background:#eee;z-index:100}.skip-link:focus{top:0}header{line-height:2;padding-bottom:1.5rem}.link{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.time{font-variant-numeric:tabular-nums;white-space:nowrap}blockquote{border-left:5px solid #eee;padding-left:1rem;margin:0}a,a:visited{color:inherit}a:hover,a.heading-link{text-decoration:none}pre{padding:.5rem;overflow:auto;overflow-x:scroll;overflow-wrap:normal}code,pre{font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;font-size:small;background:#222121}code{margin:.1rem;border:none}ul{list-style-type:square}ul,ol{padding-left:1.2rem}.list{line-height:2;list-style-type:none;padding-left:0}.list li{padding-bottom:.1rem}.meta{color:#777}.content{max-width:70ch;margin:0 auto}header{line-height:2;display:flex;justify-content:space-between;padding-bottom:1rem}header a{text-decoration:none}header ul{list-style-type:none;padding:0}header li,header a{display:inline}h2.post{padding-top:.5rem}header ul a:first-child{padding-left:1rem}.nav{height:1px;background:#000;content:'';max-width:10%}.list li{display:flex;align-items:baseline}.list li time{flex:initial}.hr-list{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:0;border-bottom:1px dotted #ccc;flex:1 0 1rem}.m,hr{border:0;margin:3rem 0}img{max-width:100%;height:auto}.post-date{margin:5% 0}.index-date{color:#9a9a9a}.animate-blink{animation:opacity 1s infinite;opacity:1}@keyframes opacity{0%{opacity:1}50%{opacity:.5}100%{opacity:0}}.tags{display:flex;justify-content:space-between}.tags ul{padding:0;margin:0}.tags li{display:inline}.avatar{height:120px;width:120px;position:relative;margin:-10px 0 0 15px;float:right;border-radius:50%}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;text-align:left;padding:8px}th{background-color:#f2f2f2} </style>
+  
+    
+  
+  
+  <script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "articleSection": "posts",
+      "name": "Vim or How do I exit this?",
+      "headline": "Vim or How do I exit this?",
+      "alternativeHeadline": "",
+      "description": "Introduction A Brief History of VIM VIMtutor Modes Useful Commands Plug-ins and .vimrc 1. Introduction If you came here because of the title, I will just answer you on the spot: :wq if you want to save before leaving, or :q! if you just want to exit without saving. If that was all that you needed to know and you really didn\u0026rsquo;t like how difficult it was to use Vim, I can\u0026rsquo;t hold you in this article anymore.",
+      "inLanguage": "en-us",
+      "isFamilyFriendly": "true",
+      "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https:\/\/maverick.canhtran.me\/posts\/vim-exiting\/"
+      },
+      "author" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "creator" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "accountablePerson" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "copyrightHolder" : "Victor Briganti",
+      "copyrightYear" : "2022",
+      "dateCreated": "2022-10-10T00:00:00.00Z",
+      "datePublished": "2022-10-10T00:00:00.00Z",
+      "dateModified": "2022-10-10T00:00:00.00Z",
+      "publisher":{
+          "@type":"Organization",
+          "name": "Victor Briganti",
+          "url": "https://maverick.canhtran.me",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https:\/\/maverick.canhtran.me\/assets\/favicon.ico",
+              "width":"32",
+              "height":"32"
+          }
+      },
+      "image": "https://maverick.canhtran.me/assets/favicon.ico",
+      "url" : "https:\/\/maverick.canhtran.me\/posts\/vim-exiting\/",
+      "wordCount" : "1963",
+      "genre" : [ "tutorial" ],
+      "keywords" : [ "tutorial" ]
+  }
+  </script>
+  
+  
+  </head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main</a>
+  <main id="main">
+  <div class="content">
+    <header>
+<p style="padding: 0;margin: 0;">
+  <a href="/">
+    <b>Victor Briganti</b>
+    <span class="text-stone-500 animate-blink">▮</span>
+  </a>
+</p>
+<ul style="padding: 0;margin: 0;">
+  
+  
+  <li class="">
+    <a href="/posts/"><span>Post</span></a>
+    
+  <li class="">
+    <a href="/tags/"><span>Tags</span></a>
+    
+  <li class="">
+    <a href="/about/"><span>About</span></a>
+    
+  </li>
+</ul>
+</header>
+<hr class="hr-list" style="padding: 0;margin: 0;">
+    <section>
+      <h2 class="post">Vim or How do I exit this?</h2>
+      <ol>
+<li><a href="#1-introduction">Introduction</a></li>
+<li><a href="#2-a-brief-history-of-vim">A Brief History of VIM</a></li>
+<li><a href="#3-vimtutor">VIMtutor</a></li>
+<li><a href="#4-modes">Modes</a></li>
+<li><a href="#5-useful-commands">Useful Commands</a></li>
+<li><a href="#6-plug-ins-and-vimrc">Plug-ins and .vimrc</a></li>
+</ol>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>If you came here because of the title, I will just answer you on the spot: :wq if you want to save before leaving, or :q! if you just want to exit without saving. If that was all that you needed to know and you really didn&rsquo;t like how difficult it was to use Vim, I can&rsquo;t hold you in this article anymore. All I can say is good luck on your journey and try using Nano next time. Now, if you came here with the idea of learning a little bit more about how this wonderful (but sometimes complex) tool works, you&rsquo;re welcome. So let&rsquo;s start.</p>
+<h2 id="2-a-brief-history-of-vim">2. A Brief History of VIM</h2>
+<p>VIM is actually an acronym for &ldquo;Vi IMproved,&rdquo; and what the heck is VI? Well, VI was a text editor created in the UNIX era, which in turn was based on ed, a line editor that was the basis for the creation of another fantastic tool, sed, but I&rsquo;m not going to talk about it (not now, anyway). The thing is, VIM comes from an ancient lineage of editors, and that is why there are a lot of things in Vim that don&rsquo;t look quite right or seem more complex than they need to be. But what I&rsquo;m really going to try to show you is that although it seems very complicated to use this tool, each of the little pieces that make it up is very well planned, and you really need to consider that in the technological field, something that continues to exist even after a long time has managed to prove itself. So if you are having trouble getting used to VIM, don&rsquo;t give up; you can do amazing things with it—just give yourself time. Now that I&rsquo;ve paid tribute to Bram Moolenaar and given you a life lesson (which you didn&rsquo;t ask for, by the way), let&rsquo;s see it in practice.</p>
+<h2 id="3-vimtutor">3. VIMtutor</h2>
+<p>One of the first things that you need to get used to if you want to work with software is reading the documentation. This is one of those things that you really should start doing because it is the best way to learn (if the documentation is good). In the case of Vim, we have the vimtutor (just paste it in your terminal), and just like that, you have all that you need to get started with Vim. At first, it will look like a lot, and quite frankly, I don&rsquo;t remember everything that Vim can do and very often need to refer to my notes to remember some of those things. It&rsquo;s very important that you read that documentation and try some of the commands that appear; you will not know everything, but with time, you will see which things you will be using very often. Another great source for learning is books, and for me, one of the greatest books if you want to learn about Vim or Neovim is Practical Vim by Drew Neil. It&rsquo;s a great source of material and will give you a good grasp on Vim.</p>
+<p><a id="modes"></a></p>
+<h2 id="4-modes">4. Modes</h2>
+<p>If you followed what I said in the previous section, much of what I am going to say here you must have already seen. But revisiting never hurts. So before we get started, I need you to understand the modes that you are going to encounter, because each command has to be entered in a certain mode to work.</p>
+<ul>
+<li>
+<p>Normal: When you open a file, this is the first mode you see. You can think of this mode as the movement mode; it’s here that you are going to move lines, delete, copy, paste, and so on. It&rsquo;s also from this mode that you can go to any other mode. You can access this mode by pressing Esc.</p>
+</li>
+<li>
+<p>Insert: This is the mode that you use to insert text. You can also do movement in this mode, but in Normal mode, it&rsquo;s way faster. You can enter this mode by pressing i when in Normal mode.</p>
+</li>
+<li>
+<p>Visual: In this mode, you can select a lot of lines all at once, similar to what you do with the mouse. Here, you can use the same movements as in Normal mode, but this mode really shines in copying, pasting, and deleting lines. In Normal mode, press v to enter Visual mode. There are variations such as &ldquo;visual block,&rdquo; which lets you select by column, and &ldquo;visual line,&rdquo; which allows you to select several lines at the same time.</p>
+</li>
+<li>
+<p>Command: In this mode, which is accessed by pressing the : key in Normal mode, you can enter commands such as substitution commands or the help command, for example. I&rsquo;m going to leave an image here that summarizes some of the commands available on the keyboard. You are probably screaming and asking, &ldquo;WHY ARE THERE SO MANY MODES? I JUST WANT TO WRITE!&rdquo; I know that at first it looks like an airplane cockpit, and that&rsquo;s why I like to start with some history. You need to understand that this was created before the mouse era, so the big thing about Vim is that you can do pretty much everything using just the keyboard. Again, have a little patience, and you will get there.</p>
+</li>
+</ul>
+<p><a id="commands"></a></p>
+<h2 id="5-useful-commands">5. Useful Commands</h2>
+<p>So now that you are starting to get used to some terminologies and commands, we are going to move forward so that I can show you some commands that I think are very useful. So let&rsquo;s get started:</p>
+<ul>
+<li>f&lt;letter&gt;: With this command, you can jump to a certain pattern within a line. You can go forward or backward using ; or ,.</li>
+<li>x: Deletes a character.</li>
+<li>0: Moves to the start of the line.</li>
+<li>$: Moves to the end of the line.</li>
+<li>*: Selects a whole word in the file. You can search for this word using n for forward searches or N for backward searches.</li>
+<li>:&lt;number&gt;: Moves to any line that you specify.</li>
+<li>:&lt;number&gt;t&lt;number&gt;: Copies the content from the first line number to the second line number.</li>
+<li>:&lt;number&gt;m&lt;number&gt;: Moves the content from the first line number to the second line number.</li>
+<li>&lt;CTRL-o&gt;: A very cool command that I don&rsquo;t see many people talking about. If you press this in Insert mode, it enters Normal mode, executes an action, and returns to Insert mode.</li>
+<li>&lt;CTRL-n&gt; and &lt;CTRL-p&gt;: These two commands in Insert mode permit you to autocomplete a word.</li>
+<li>&lt;CTRL-x&gt; followed by &lt;CTRL-l&gt;: These two commands need to be used one after another, but they basically autocomplete an entire line.</li>
+<li>k, j, h, and l: In Normal or Visual mode, these correspond to the arrows up (k), down (j), left (h), and right (l).</li>
+<li>w: Moves to the start of the next word.</li>
+<li>e: Moves to the end of the next word.</li>
+<li>b: Moves to the start of the previous word.</li>
+<li>y: Copies. yw copies the entire word.</li>
+<li>p and P: Both are used to paste, but p pastes after the line, and P pastes before the line.</li>
+<li>d: Deletes. It&rsquo;s important to know that in Vim, deleting something is the same as cutting, so if you copy some text and then delete, the text in your buffer will be the one that was deleted. dw deletes an entire word.</li>
+<li>c: Deletes and enters Insert mode (very good for saving time). One good use of this command is with w; cw lets you delete a word and insert text at the same time.</li>
+<li>&lt;CTRL-v&gt; followed by &lt;SHIFT-i&gt;: When in block Visual mode, select all the lines that you want to edit, then press <SHIFT-i> and make the edits you want, then press &lt;ESC&gt;. All the lines you selected will be edited.</li>
+<li>/ and ?: These commands allow you to search for a word in the entire file. n searches forward, and N searches backward. / starts the search from the top, and ? starts the search from the bottom.</li>
+<li>// and ??: Executes the last search.</li>
+<li>=: This magical command allows you to indent all your code (just beautiful).</li>
+<li>.: Executes the last command.</li>
+<li>%s/undone/done/g: This is an important command to remember. With this command, you can substitute every occurrence of a word. So let&rsquo;s break it down: % means all lines (you could substitute this for specific lines), s means substitute, /undone is the word you are searching for, /done is the word that will replace /undone, and /g means to execute it globally; otherwise, it would execute just once per line.</li>
+</ul>
+<p>There are other commands and features you could learn about Vim, such as registers and macros, which can really improve your experience. But I won&rsquo;t cover those in this article. If you are interested in this type of thing, you could refer to the book I recommended earlier; it covers a lot of this kind of content.</p>
+<h2 id="6-plug-ins-and-vimrc">6. Plug-ins and .vimrc</h2>
+<p>If you are already feeling overwhelmed by all this, don&rsquo;t worry; there&rsquo;s always more. One of the greatest things about Vim is that it&rsquo;s very flexible and lets you use the tool in the way that you think suits you best.</p>
+<p>There are two ways of customizing your Vim experience: you can modify its usability by adding extensions, which will give you a whole new perspective on what you can do. For that, you can use plug-ins. I have to admit that I&rsquo;m not a huge fan of using plug-ins myself, but if you need something more robust, you should definitely take a look. When we talk about plug-ins, we also need to talk about Neovim. It’s essentially what Vim was to VI—a way to improve the software. Although there’s kind of a rivalry between users of both, I have to say that if you need something more like an IDE, you should definitely consider Neovim. The best thing about it is that you can have both on your machine, so it’s definitely worth exploring.</p>
+<p>Another thing you can do to make your life easier while using Vim is to have a good .vimrc, which is your configuration file. With this file, you can install your plug-ins, change keybindings, and more. Knowing how to configure your .vimrc is as important as learning any keybinding because it’s through this configuration file that you can make Vim feel exactly how you want it to, so keep that in mind.</p>
+<p>One of the things about dotfiles and plug-ins is that they are very personal, and I can’t tell you exactly what you should or shouldn’t use. Instead of showing you my dotfile and the plug-ins that I’m currently using, I will give you some links to good starting points:</p>
+<p><a href="https://github.com/junegunn/vim-plug">GitHub - junegunn/vim-plug: Minimalist Vim Plugin Manager</a> This one is my personnal favorite in plug-in management, if you are gonna use the neovim you&rsquo;re probably using other extension but this one works quite well for me.</p>
+<p><a href="https://github.com/NvChad/NvChad">GitHub - NvChad/NvChad: An attempt to make neovim cli functional like an IDE while being very beautiful, blazing fast startuptime ~ 14ms to 67ms</a> This is more a a place to start, here you are gonna find a neovim distribution that come with a lot of things pre-configured, you don&rsquo;t need to use this but it&rsquo;s nice to have a base to start with.</p>
+<p><a href="https://vimhelp.org/?">Vim: help.txt</a> again the vim documentation is one of the best places to get anything that you need to know. And this is the case for .vimrc .</p>
+<p>You can also get better information about the options in .vimrc with the command :help vimrc.</p>
+<h2 id="end">END</h2>
+<p>So we’ve reached the end of this article. I hope that you’ve gotten a good push in the direction of how to use Vim and where to start. And as always, remember :wq (stay safe and goodbye).</p>
+
+      
+      <div class="post-date">
+        <span class="g time">October 10, 2022 </span> &#8729;
+         
+         <a href="https://maverick.canhtran.me/tags/tutorial/">tutorial</a>
+      </div>
+      
+    </section>
+    
+    
+    <div id="comments">
+      
+<script src="https://utteranc.es/client.js"
+    repo=canhtran/maverick
+    issue-term="pathname"
+    theme=github-dark
+    crossorigin="anonymous"
+    async>
+</script>
+
+
+    </div>
+    
+    
+  </div>
+</main>
+</body>
+</html>

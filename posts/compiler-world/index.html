@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Liste - https://maverick.canhtran.me">
+    <title>Understanding Compilers | Victor Briganti</title>
+    <meta name="description" content="A blog for building knowledge">
+    <meta property="og:title" content="Understanding Compilers" />
+<meta property="og:description" content="Introduction It&rsquo;s All Binaries Automatons Roll Out Compiling Flexing my Bison with a Calculator 1.Introduction When we think of computers, particularly programming languages, one of the first questions that should come to mind is, &ldquo;How does the computer understand that?&ldquo;And that is one of the questions that can be answered by analyzing how a compiler works.
+Compilers are basically programs that can translate programming languages into computer language. And that is what we are going to talk about in this article." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://maverick.canhtran.me/posts/compiler-world/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-12-11T00:00:00+00:00" />
+
+
+    <meta itemprop="name" content="Understanding Compilers">
+<meta itemprop="description" content="Introduction It&rsquo;s All Binaries Automatons Roll Out Compiling Flexing my Bison with a Calculator 1.Introduction When we think of computers, particularly programming languages, one of the first questions that should come to mind is, &ldquo;How does the computer understand that?&ldquo;And that is one of the questions that can be answered by analyzing how a compiler works.
+Compilers are basically programs that can translate programming languages into computer language. And that is what we are going to talk about in this article."><meta itemprop="datePublished" content="2022-12-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-12-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1964">
+<meta itemprop="keywords" content="technology,coding," />
+    
+    <link rel="canonical" href="https://maverick.canhtran.me/posts/compiler-world/">
+    <link rel="icon" href="https://maverick.canhtran.me/assets/favicon.ico">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link href="https://www.google-analytics.com" rel="preconnect" crossorigin>
+    <link rel="alternate" type="application/atom+xml" title="Victor Briganti" href="https://maverick.canhtran.me/atom.xml" />
+    <link rel="alternate" type="application/json" title="Victor Briganti" href="https://maverick.canhtran.me/feed.json" />
+    <link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=">
+    
+    
+    <style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding:2rem;background:#0a0909;color:#fcfcfc}.skip-link{position:absolute;top:-40px;left:0;background:#eee;z-index:100}.skip-link:focus{top:0}header{line-height:2;padding-bottom:1.5rem}.link{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.time{font-variant-numeric:tabular-nums;white-space:nowrap}blockquote{border-left:5px solid #eee;padding-left:1rem;margin:0}a,a:visited{color:inherit}a:hover,a.heading-link{text-decoration:none}pre{padding:.5rem;overflow:auto;overflow-x:scroll;overflow-wrap:normal}code,pre{font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;font-size:small;background:#222121}code{margin:.1rem;border:none}ul{list-style-type:square}ul,ol{padding-left:1.2rem}.list{line-height:2;list-style-type:none;padding-left:0}.list li{padding-bottom:.1rem}.meta{color:#777}.content{max-width:70ch;margin:0 auto}header{line-height:2;display:flex;justify-content:space-between;padding-bottom:1rem}header a{text-decoration:none}header ul{list-style-type:none;padding:0}header li,header a{display:inline}h2.post{padding-top:.5rem}header ul a:first-child{padding-left:1rem}.nav{height:1px;background:#000;content:'';max-width:10%}.list li{display:flex;align-items:baseline}.list li time{flex:initial}.hr-list{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:0;border-bottom:1px dotted #ccc;flex:1 0 1rem}.m,hr{border:0;margin:3rem 0}img{max-width:100%;height:auto}.post-date{margin:5% 0}.index-date{color:#9a9a9a}.animate-blink{animation:opacity 1s infinite;opacity:1}@keyframes opacity{0%{opacity:1}50%{opacity:.5}100%{opacity:0}}.tags{display:flex;justify-content:space-between}.tags ul{padding:0;margin:0}.tags li{display:inline}.avatar{height:120px;width:120px;position:relative;margin:-10px 0 0 15px;float:right;border-radius:50%}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;text-align:left;padding:8px}th{background-color:#f2f2f2} </style>
+  
+    
+  
+  
+  <script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "articleSection": "posts",
+      "name": "Understanding Compilers",
+      "headline": "Understanding Compilers",
+      "alternativeHeadline": "",
+      "description": "Introduction It\u0026rsquo;s All Binaries Automatons Roll Out Compiling Flexing my Bison with a Calculator 1.Introduction When we think of computers, particularly programming languages, one of the first questions that should come to mind is, \u0026ldquo;How does the computer understand that?\u0026ldquo;And that is one of the questions that can be answered by analyzing how a compiler works.\nCompilers are basically programs that can translate programming languages into computer language. And that is what we are going to talk about in this article.",
+      "inLanguage": "en-us",
+      "isFamilyFriendly": "true",
+      "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https:\/\/maverick.canhtran.me\/posts\/compiler-world\/"
+      },
+      "author" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "creator" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "accountablePerson" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "copyrightHolder" : "Victor Briganti",
+      "copyrightYear" : "2022",
+      "dateCreated": "2022-12-11T00:00:00.00Z",
+      "datePublished": "2022-12-11T00:00:00.00Z",
+      "dateModified": "2022-12-11T00:00:00.00Z",
+      "publisher":{
+          "@type":"Organization",
+          "name": "Victor Briganti",
+          "url": "https://maverick.canhtran.me",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https:\/\/maverick.canhtran.me\/assets\/favicon.ico",
+              "width":"32",
+              "height":"32"
+          }
+      },
+      "image": "https://maverick.canhtran.me/assets/favicon.ico",
+      "url" : "https:\/\/maverick.canhtran.me\/posts\/compiler-world\/",
+      "wordCount" : "1964",
+      "genre" : [ "technology" , "coding" ],
+      "keywords" : [ "technology" , "coding" ]
+  }
+  </script>
+  
+  
+  </head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main</a>
+  <main id="main">
+  <div class="content">
+    <header>
+<p style="padding: 0;margin: 0;">
+  <a href="/">
+    <b>Victor Briganti</b>
+    <span class="text-stone-500 animate-blink">▮</span>
+  </a>
+</p>
+<ul style="padding: 0;margin: 0;">
+  
+  
+  <li class="">
+    <a href="/posts/"><span>Post</span></a>
+    
+  <li class="">
+    <a href="/tags/"><span>Tags</span></a>
+    
+  <li class="">
+    <a href="/about/"><span>About</span></a>
+    
+  </li>
+</ul>
+</header>
+<hr class="hr-list" style="padding: 0;margin: 0;">
+    <section>
+      <h2 class="post">Understanding Compilers</h2>
+      <ol>
+<li><a href="#1introduction">Introduction</a></li>
+<li><a href="#2its-all-binaries">It&rsquo;s All Binaries</a></li>
+<li><a href="#3automatons-roll-out">Automatons Roll Out</a></li>
+<li><a href="#4-compiling">Compiling</a></li>
+<li><a href="#5flexing-my-bison-with-a-calculator">Flexing my Bison with a Calculator</a></li>
+</ol>
+<h2 id="1introduction">1.Introduction</h2>
+<p>When we think of computers, particularly programming languages, one of the first questions that should come to mind is, &ldquo;How does the computer understand that?&ldquo;And that is one of the questions that can be answered by analyzing how a compiler works.</p>
+<p>Compilers are basically programs that can translate programming languages into computer language. And that is what we are going to talk about in this article.</p>
+<h2 id="2its-all-binaries">2.It&rsquo;s All Binaries</h2>
+<p>As I was saying in the introduction, for the computer to be able to execute some program, he needs to be able to read and understand the file, and for that to work, it&rsquo;s necessary to transform the file into a binary format.</p>
+<p>All the things that the computer understands are basically 1s and 0s (on and off), and the computer works like that because its hardware architecture is basically a bunch of wires receiving electrical signals, and each one of these signals is going to be read by the CPU which will perform some action. There are various computer architectures, but in a similar way to how we give a context to sound and call it a world, signals provide context, and the combination of some of them has meaning, as in the case of &ldquo;01101000 01101001&rdquo; (which means hi in binary).Some actions are performed as we give meaning to these combinations and pass them on to the CPU, such as arithmetic operations.</p>
+<p>But the thing is, it&rsquo;s extremely difficult to write a word in binary in two letters because it requires 16 numbers to be written, so programming languages emerge over time. A programming language is a method that we discovered for writing binary in a comprehensive manner. We write the program in the same way that we would write any other type of text, using our usual alphabet (but with different grammatical rules), and then pass that text to a translator, which is where we introduce the compiler. Everything that the compiler does is to get this text that you write, read it and translate it in a way that a computer could also read it and perform the actions that you are specifying.</p>
+<h2 id="3automatons-roll-out">3.Automatons Roll Out</h2>
+<p>Before we get to studying the compilers, it is important to understand some other concepts of computation. And one of the most important theories that we need to understand when we are dealing with computers is the theory of automata.</p>
+<p>This theory studies the idea of an abstract machine and how it would work. This theory is a little bit extensive to be covered in one single article, but in a brief way, we have different kinds of machines, each with a different way of executing an action. The states machine will most likely be used for the compiler&rsquo;s part.</p>
+<p>In automata, a state machine, will perform actions depending on the state where you are and the input you receive.</p>
+<p><img
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/DFAexample.svg/300px-DFAexample.svg.png"
+  alt=""
+  loading="lazy"
+  decoding="async"
+  class="full-width"
+/>
+
+</p>
+<p>This is an example of a state machine in which the inputs are 0 and 1, and each time an input is passed in a specific state, the machine moves to another state (or remains in the same state), and the machine is in an accepted state when it stops at S1 after all inputs. These are machines that can have more than one accepted state. In more complex machines, we have a nondeterministic way of dealing with the inputs, which can be a problem in some cases, in other cases, not just the states are needed, but a stack is needed to store the inputs, and that can get more and more complex depending on the machine.</p>
+<p>The compiler itself is not tied to a machine type, but we study automata theory mainly because we use its concepts in the creation of a grammar. We use a grammar to identify states that a machine can be in and to generate tokens that can be translated in a way that the computer can follow the correct flow of execution.</p>
+<p>For that to be possible, we use the concept of regular expressions, which in a simple way can identify patterns in a string. An example of this is the regex (for the non-intimate regular expressions) &lsquo;[0-9]+&rdquo; in which we are recognizing all the patterns of numbers (0 to 9) that appear one or more times (which is done with the + symbol). With this expression, we can generate tokens that express a number for the compiler.</p>
+<p>To make this idea a little simpler to visualize, let&rsquo;s exemplify with a grammar rule:</p>
+<p>E -&gt; E + E</p>
+<p>E -&gt; E * E</p>
+<p>With this grammar here, we are saying that every id (that in this case we are going to consider a number) can be considered a E(an expression) and as you can see going up the grammar, we can a addition on the multiplication of two expressions within a expression itself. So in a more simple way, an expression like 1+1*2 can be:</p>
+<p>-&gt; 1+1*2</p>
+<p>-&gt; E+1*2</p>
+<p>-&gt; E+E*2</p>
+<p>-&gt; E*2</p>
+<p>-&gt; E*E</p>
+<p>-&gt; E</p>
+<p>This is the way that compilers identify expressions and organize the execution of the code. I not going to extend myself further on this, but if you are curious and want to play with grammar, this site is wonderful:
+<a href="https://mdaines.github.io/grammophone/#/lalr1-automaton">https://mdaines.github.io/grammophone/#/lalr1-automaton</a></p>
+<h2 id="4-compiling">4. Compiling</h2>
+<p>And finally we get to compiling this is one of the most extensive subjects in computing and one of the most complex as well. I will try to give you a brief introduction on this subject in a way that is easy to follow without getting into too many details.</p>
+<p>So as we see in the automatons, we have a grammar that is basically a programming language. So one of the first things that a compiler needs to know is how to interpret a grammar, in most cases, the compiler passes a lexical analyzer that will identify the tokens (as we already did) and then he parses these tokens, generating blocks of code that can be read and executed.</p>
+<p>Some of the things that the compiler needs to consider when doing his analysis are the names of variables, he needs to consider the type of the variable because each kind has a different size in memory, and he also needs to know how they are going to interact with each other. For example in C a char is 1 byte, int is 4 bytes, a long is 8 bytes and so on, in addition to this there&rsquo;s special kinds of variables, as is the case of the struct that can receive different variables within itself or the array that supports several of the same type not to mention the pointers that work in a completely different way with memory addresses. Not only that, but the compiler must understand how the program will interact with the operational system, as each has a unique way of working with executables. One interesting study case is Java because this language has a virtual machine (JVM), and instead of executing directly in the OS the code is first translated in a way that the JVM can read, and then the JVM talks to the OS. That&rsquo;s a really clever way to port a code to multiple types of operating systems without having to change the code.</p>
+<p>An executable segment can be called a block of code, These blocks are basically binary blocks that are going to be pushed into the memory and then from the memory to the CPU to perform some actions. Each new function or library needs to be pushed into the main memory (usually the RAM), we can divide this memory in this concept:</p>
+<p>As you can see in the image, we have the global and static memory where we can find the main function and some global variables, and then we have the stack and the heap, which is where we are going to push the functions and other dynamic variables.</p>
+<p>Another important process that is not the compiler&rsquo;s responsibility but that we ended up associating with him is the linking process, which is when we get a function from another file and push it to memory to be used with our program or the so-called libraries.To make this work, the compiler needs to leave blank addresses that are going to be picked up by the linker and associated with the right library.</p>
+<p>This topic is very complex and has a lot of discussion on each subtopic. I&rsquo;ll give you some links to other places where you can read more about it and understand some concepts in greater depth:</p>
+<p><a href="https://akkadia.org/drepper/dsohowto.pdf">https://akkadia.org/drepper/dsohowto.pdf</a></p>
+<p><a href="https://www.lurklurk.org/linkers/linkers.html">Beginner&rsquo;s Guide to Linkers</a></p>
+<p><a href="http://www2.hawaii.edu/~takebaya/ics111/process_of_programming/process_of_programming.html">http://www2.hawaii.edu/~takebaya/ics111/process_of_programming/process_of_programming.html</a></p>
+<p><a href="https://www.amazon.com/Engineering-Compiler-Keith-D-Cooper/dp/0128154128/ref=zg_bs_3970_sccl_6/130-6334203-3969022?psc=1">https://www.amazon.com/Engineering-Compiler-Keith-D-Cooper/dp/0128154128/ref=zg_bs_3970_sccl_6/130-6334203-3969022?psc=1</a></p>
+<h2 id="5flexing-my-bison-with-a-calculator">5.Flexing my Bison with a Calculator</h2>
+<p>For you guys (and for myself too) I made a little program that will work as a calculator with Flex and Bison. &ldquo;What the f@$k is Flex and Bison?&rdquo; you might ask. &ldquo;Be patient, young padawan. I&rsquo;m going to explain what they do and give you my little program so you can play with it a little.&rdquo;</p>
+<p>So starting with Flex (the fast lexical analyzer) he is responsible for getting a file, analyzing each word, and returning a token. Here is an example of part of the code in my calculator:</p>
+<pre tabindex="0"><code>&#34;+&#34; { return ADD; }
+&#34;-&#34; { return SUB; }
+&#34;*&#34; { return MULT; }
+</code></pre><p>As you can see, we have three symbols: the plus, minus, and asterisk. Each time one of them is found in a file that is passed to the flex the ADD, SUB or MULT will be respectively returned. As we pass these values to our YACC (yet another compiler-compiler, in this case the Bison),</p>
+<p>When we get into the Bison, what we get is the grammar part and some other code parts that are going to be executed as the tokens are passed. Here is the Bison part of the calculator:</p>
+<pre tabindex="0"><code>int_expr: I_NUM { $$ = $1; }
+    | int_expr ADD int_expr { $$ = $1 + $3; }
+    | int_expr SUB int_expr { $$ = $1 - $3; }
+    | int_expr MULT int_expr { $$ = $1 * $3; }
+    | P_LEFT int_expr P_RIGHT { $$ = $2; }
+    | SUB int_expr { $$ = -$2; }
+</code></pre><p>Here is the grammar, and as you can see, there are two types of tokens: the expression (in this case, an integer expression) and the operation token, which will define some kind of arithmetic operation.</p>
+<p>So we will compile (well, if that is not ironic) these two programs together, and we will have a program that can read and execute the expression in the correct flow of data.</p>
+<p>If you want to see the whole program, you can get the source code here:<a href="https://github.com/JohhnMag0/Abaco-Calculator">GitHub - JohhnMag0/Abaco-Calculator</a></p>
+<p>The documentation of flex and bison is not very good(for me at least), so if you want toy with it a little I recommend this book as a entrance in this worl <a href="https://www.amazon.com.br/Flex-Bison-John-Levine/dp/0596155972/ref=sr_1_1?keywords=flex+and+bison&amp;qid=1670848361&amp;sr=8-1&amp;ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9">https://www.amazon.com.br/Flex-Bison-John-Levine/dp/0596155972/ref=sr_1_1?keywords=flex+and+bison&amp;qid=1670848361&amp;sr=8-1&amp;ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9</a></p>
+<p>For the ones that don&rsquo;t like C(you guy are monsters) there is other types of librarys that can be useful for you that are write in other languages. Here is one that is written in python is a little old but is good enough: <a href="https://www.dabeaz.com/ply/">PLY (Python Lex-Yacc)</a></p>
+<p>And if you are really hardcore(<a href="https://www.youtube.com/watch?v=b-HbPN6n2Gc">Jorge: Quiere ser hardcore y su mama no lo deja - YouTube</a>) and want to go all win writing your first language(because why not) the lvm has a great documentation on how to start [My First Language Frontend with LLVM Tutorial — LLVM 16.0.0git documentation](<a href="https://llvm.org/docs/tutorial/MyFirstLanguageFrontend/index.html">https://llvm.org/docs/tutorial/MyFirstLanguageFrontend/index.html</a></p>
+<h2 id="end">END</h2>
+<p>The concept of compilers is an extremely dense thing and you can really go down a rabbit hole when studying it but I hope this article has shed some light on what it is and where you can start. Stay safe and goodbye.</p>
+
+      
+      <div class="post-date">
+        <span class="g time">December 11, 2022 </span> &#8729;
+         
+         <a href="https://maverick.canhtran.me/tags/technology/">technology</a> <a href="https://maverick.canhtran.me/tags/coding/">coding</a>
+      </div>
+      
+    </section>
+    
+    
+    <div id="comments">
+      
+<script src="https://utteranc.es/client.js"
+    repo=canhtran/maverick
+    issue-term="pathname"
+    theme=github-dark
+    crossorigin="anonymous"
+    async>
+</script>
+
+
+    </div>
+    
+    
+  </div>
+</main>
+</body>
+</html>

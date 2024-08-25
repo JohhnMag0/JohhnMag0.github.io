@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Liste - https://maverick.canhtran.me">
+    <title>Generating Random Passwords | Victor Briganti</title>
+    <meta name="description" content="A blog for building knowledge">
+    <meta property="og:title" content="Generating Random Passwords" />
+<meta property="og:description" content="Introduction Why Can&rsquo;t Computers Generate Random Numbers? /dev/urandom and /dev/random Implementing a CLI on Linux 1. Introduction I have been taking some classes at the university over the past few weeks, and we have started to get a grasp on the C programming language. I really like the idea of seeing how things work under the hood. However, I believe that the best way to see if you are making progress is to work on projects." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://maverick.canhtran.me/posts/generate-password/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-09-09T00:00:00+00:00" />
+
+
+    <meta itemprop="name" content="Generating Random Passwords">
+<meta itemprop="description" content="Introduction Why Can&rsquo;t Computers Generate Random Numbers? /dev/urandom and /dev/random Implementing a CLI on Linux 1. Introduction I have been taking some classes at the university over the past few weeks, and we have started to get a grasp on the C programming language. I really like the idea of seeing how things work under the hood. However, I believe that the best way to see if you are making progress is to work on projects."><meta itemprop="datePublished" content="2022-09-09T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-09-09T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1226">
+<meta itemprop="keywords" content="coding,technology," />
+    
+    <link rel="canonical" href="https://maverick.canhtran.me/posts/generate-password/">
+    <link rel="icon" href="https://maverick.canhtran.me/assets/favicon.ico">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link href="https://www.google-analytics.com" rel="preconnect" crossorigin>
+    <link rel="alternate" type="application/atom+xml" title="Victor Briganti" href="https://maverick.canhtran.me/atom.xml" />
+    <link rel="alternate" type="application/json" title="Victor Briganti" href="https://maverick.canhtran.me/feed.json" />
+    <link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=">
+    
+    
+    <style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding:2rem;background:#0a0909;color:#fcfcfc}.skip-link{position:absolute;top:-40px;left:0;background:#eee;z-index:100}.skip-link:focus{top:0}header{line-height:2;padding-bottom:1.5rem}.link{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.time{font-variant-numeric:tabular-nums;white-space:nowrap}blockquote{border-left:5px solid #eee;padding-left:1rem;margin:0}a,a:visited{color:inherit}a:hover,a.heading-link{text-decoration:none}pre{padding:.5rem;overflow:auto;overflow-x:scroll;overflow-wrap:normal}code,pre{font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;font-size:small;background:#222121}code{margin:.1rem;border:none}ul{list-style-type:square}ul,ol{padding-left:1.2rem}.list{line-height:2;list-style-type:none;padding-left:0}.list li{padding-bottom:.1rem}.meta{color:#777}.content{max-width:70ch;margin:0 auto}header{line-height:2;display:flex;justify-content:space-between;padding-bottom:1rem}header a{text-decoration:none}header ul{list-style-type:none;padding:0}header li,header a{display:inline}h2.post{padding-top:.5rem}header ul a:first-child{padding-left:1rem}.nav{height:1px;background:#000;content:'';max-width:10%}.list li{display:flex;align-items:baseline}.list li time{flex:initial}.hr-list{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:0;border-bottom:1px dotted #ccc;flex:1 0 1rem}.m,hr{border:0;margin:3rem 0}img{max-width:100%;height:auto}.post-date{margin:5% 0}.index-date{color:#9a9a9a}.animate-blink{animation:opacity 1s infinite;opacity:1}@keyframes opacity{0%{opacity:1}50%{opacity:.5}100%{opacity:0}}.tags{display:flex;justify-content:space-between}.tags ul{padding:0;margin:0}.tags li{display:inline}.avatar{height:120px;width:120px;position:relative;margin:-10px 0 0 15px;float:right;border-radius:50%}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;text-align:left;padding:8px}th{background-color:#f2f2f2} </style>
+  
+    
+  
+  
+  <script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "articleSection": "posts",
+      "name": "Generating Random Passwords",
+      "headline": "Generating Random Passwords",
+      "alternativeHeadline": "",
+      "description": "Introduction Why Can\u0026rsquo;t Computers Generate Random Numbers? \/dev\/urandom and \/dev\/random Implementing a CLI on Linux 1. Introduction I have been taking some classes at the university over the past few weeks, and we have started to get a grasp on the C programming language. I really like the idea of seeing how things work under the hood. However, I believe that the best way to see if you are making progress is to work on projects.",
+      "inLanguage": "en-us",
+      "isFamilyFriendly": "true",
+      "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https:\/\/maverick.canhtran.me\/posts\/generate-password\/"
+      },
+      "author" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "creator" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "accountablePerson" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "copyrightHolder" : "Victor Briganti",
+      "copyrightYear" : "2022",
+      "dateCreated": "2022-09-09T00:00:00.00Z",
+      "datePublished": "2022-09-09T00:00:00.00Z",
+      "dateModified": "2022-09-09T00:00:00.00Z",
+      "publisher":{
+          "@type":"Organization",
+          "name": "Victor Briganti",
+          "url": "https://maverick.canhtran.me",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https:\/\/maverick.canhtran.me\/assets\/favicon.ico",
+              "width":"32",
+              "height":"32"
+          }
+      },
+      "image": "https://maverick.canhtran.me/assets/favicon.ico",
+      "url" : "https:\/\/maverick.canhtran.me\/posts\/generate-password\/",
+      "wordCount" : "1226",
+      "genre" : [ "coding" , "technology" ],
+      "keywords" : [ "coding" , "technology" ]
+  }
+  </script>
+  
+  
+  </head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main</a>
+  <main id="main">
+  <div class="content">
+    <header>
+<p style="padding: 0;margin: 0;">
+  <a href="/">
+    <b>Victor Briganti</b>
+    <span class="text-stone-500 animate-blink">▮</span>
+  </a>
+</p>
+<ul style="padding: 0;margin: 0;">
+  
+  
+  <li class="">
+    <a href="/posts/"><span>Post</span></a>
+    
+  <li class="">
+    <a href="/tags/"><span>Tags</span></a>
+    
+  <li class="">
+    <a href="/about/"><span>About</span></a>
+    
+  </li>
+</ul>
+</header>
+<hr class="hr-list" style="padding: 0;margin: 0;">
+    <section>
+      <h2 class="post">Generating Random Passwords</h2>
+      <ol>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#im-sorry-dave">Why Can&rsquo;t Computers Generate Random Numbers?</a></li>
+<li><a href="#random">/dev/urandom and /dev/random</a></li>
+<li><a href="#cli">Implementing a CLI on Linux</a></li>
+</ol>
+<p><a id="introduction"></a></p>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>I have been taking some classes at the university over the past few weeks, and we have started to get a grasp on the C programming language. I really like the idea of seeing how things work under the hood. However, I believe that the best way to see if you are making progress is to work on projects. One of the things I consider very useful, but which is not provided by default on Linux, is a random password generator. So, I decided to create a simple CLI program that generates random passwords. In this article, we will explore how this program is implemented and why I made certain decisions.</p>
+<p><a id="im-sorry-dave"></a></p>
+<h2 id="2-why-cant-computers-generate-random-numbers">2. Why Can&rsquo;t Computers Generate Random Numbers?</h2>
+<p>As you may know, a computer is essentially a sophisticated calculator, used historically by NASA to go to the moon and more recently by your grandmother to play Candy Crush. Because of this, computers are designed to perform calculations, which makes true random number generation difficult. If you think about it, you can&rsquo;t simply input two values into a calculator and expect a random result (e.g., 2+2=127), and thank goodness for that. While it&rsquo;s good that computers don&rsquo;t return truly random numbers in their calculations, this becomes problematic when true randomness is needed, such as in cryptography.</p>
+<p>To address this, some very smart people have developed methods for generating pseudo-random numbers. Most programming languages and even operating systems have implementations for generating pseudo-random numbers. In C, a common function provided by the standard library is rand() and its companion srand():</p>
+<ul>
+<li>rand(): This function returns a pseudo-random number. Its implementation is as follows:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a8c8">int</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75af00">rand_r</span> <span style="color:#111">(</span><span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">int</span> <span style="color:#f92672">*</span><span style="color:#111">seed</span><span style="color:#111">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">int</span> <span style="color:#111">next</span> <span style="color:#f92672">=</span> <span style="color:#f92672">*</span><span style="color:#111">seed</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a8c8">int</span> <span style="color:#111">result</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">next</span> <span style="color:#f92672">*=</span> <span style="color:#ae81ff">1103515245</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">next</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">12345</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span><span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">int</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#111">next</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">65536</span><span style="color:#111">)</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2048</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">next</span> <span style="color:#f92672">*=</span> <span style="color:#ae81ff">1103515245</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">next</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">12345</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">result</span> <span style="color:#f92672">&lt;&lt;=</span> <span style="color:#ae81ff">10</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">result</span> <span style="color:#f92672">^=</span> <span style="color:#111">(</span><span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">int</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#111">next</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">65536</span><span style="color:#111">)</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1024</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">next</span> <span style="color:#f92672">*=</span> <span style="color:#ae81ff">1103515245</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">next</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">12345</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">result</span> <span style="color:#f92672">&lt;&lt;=</span> <span style="color:#ae81ff">10</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">result</span> <span style="color:#f92672">^=</span> <span style="color:#111">(</span><span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">int</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#111">next</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">65536</span><span style="color:#111">)</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1024</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span><span style="color:#111">seed</span> <span style="color:#f92672">=</span> <span style="color:#111">next</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">}</span>
+</span></span></code></pre></div><p>Source: What common algorithms are used for C&rsquo;s rand()? - Stack Overflow</p>
+<p>This function uses a seed (an integer) and performs basic computational operations like addition, multiplication, and bit manipulation to generate a number that &ldquo;looks&rdquo; random. Note that this function will always generate the same sequence of numbers given the same seed, so be cautious when using it in production.</p>
+<ul>
+<li>srand(): This function is used to set the seed for rand(). The &rsquo;s&rsquo; in srand stands for seed. Unlike rand(), srand() requires an argument, which is usually the current time (using the time.h library in C). By providing a new seed each time the program runs, you ensure different random numbers.</li>
+</ul>
+<p>Although these functions are good for generating random numbers, they may not be suitable for more robust needs, such as in a password generator that requires high entropy (i.e., completely different numbers). As previously mentioned, rand() generates the same sequence of numbers if given the same seed, and srand() can cause issues if the seed is not sufficiently varied, potentially generating the same password.</p>
+<p>Therefore, I decided to use a different approach to generate the random numbers needed for my program.</p>
+<p>Note: If you are interested in the topic of generating random numbers, here are three videos that discuss this subject:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=aSlkVy3mbR0&amp;list=TLPQMDkwOTIwMjIIH55doAV2ew&amp;index=4">Random Numbers (How Software Works) - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=Ks1pw1X22y4&amp;list=TLPQMDkwOTIwMjIIH55doAV2ew&amp;index=4">Random Numbers with LFSR (Linear Feedback Shift Register) - Computerphile - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=_tN2ev3hO14">NMCS4ALL: Random number generators - YouTube</a></li>
+</ul>
+<p><a id="random"></a></p>
+<ol start="3">
+<li>/dev/random and /dev/urandom</li>
+</ol>
+<p>Before diving into the details of my approach, it&rsquo;s important to note that the method I&rsquo;m using is just one of many ways to generate random numbers. A quick search in C forums will reveal numerous libraries with complex mathematical expressions used for this purpose. Here is a Wikipedia article that provides an overview of some random number generation algorithms: List of Random Number Generators - Wikipedia.</p>
+<p>I will now discuss two files in the Linux system: /dev/random and /dev/urandom. Both of these files are used by the OS to generate random numbers. They essentially provide a stream of &ldquo;noise&rdquo; from the system, collected from drivers and other sources since boot.</p>
+<p>You may wonder why there are two files. /dev/random is built up as the system runs and needs time to collect sufficient noise. This can cause reads from this file to be blocked until it has enough entropy to provide a response.</p>
+<p>In contrast, /dev/urandom uses some of the already existing noise in the system, which makes it slightly less random, but it is available immediately for requests.</p>
+<p>Here’s how this is done in my code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">void</span> <span style="color:#75af00">gendigit</span><span style="color:#111">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">size</span><span style="color:#111">){</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">int</span> <span style="color:#111">randval</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">FILE</span> <span style="color:#f92672">*</span><span style="color:#111">f</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">char</span> <span style="color:#111">list</span><span style="color:#111">[]</span> <span style="color:#f92672">=</span> <span style="color:#111">NUM</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">char</span> <span style="color:#111">pass</span><span style="color:#111">[</span><span style="color:#111">size</span><span style="color:#111">];</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">f</span> <span style="color:#f92672">=</span> <span style="color:#75af00">fopen</span><span style="color:#111">(</span><span style="color:#d88200">&#34;/dev/urandom&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;r&#34;</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a8c8">for</span> <span style="color:#111">(</span><span style="color:#111">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span><span style="color:#111">;</span> <span style="color:#111">i</span><span style="color:#f92672">&lt;</span><span style="color:#111">size</span><span style="color:#111">;</span> <span style="color:#111">i</span><span style="color:#f92672">++</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">fread</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">randval</span><span style="color:#111">,</span> <span style="color:#00a8c8">sizeof</span><span style="color:#111">(</span><span style="color:#111">randval</span><span style="color:#111">),</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#111">f</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#111">pass</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#111">list</span><span style="color:#111">[</span><span style="color:#111">randval</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span><span style="color:#111">];</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75af00">printf</span><span style="color:#111">(</span><span style="color:#d88200">&#34;%c&#34;</span><span style="color:#111">,</span> <span style="color:#111">pass</span><span style="color:#111">[</span><span style="color:#111">i</span><span style="color:#111">]);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">fclose</span><span style="color:#111">(</span><span style="color:#111">f</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75af00">printf</span><span style="color:#111">(</span><span style="color:#d88200">&#34;</span><span style="color:#8045ff">\n</span><span style="color:#d88200">&#34;</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span></code></pre></div><p>In this function, we print a series of random digits. The pointer *f of type FILE is used to open the /dev/urandom file, read random values, and generate a password. This pointer is somewhat analogous to how your grandmother might read a restaurant menu by moving her finger across it.</p>
+<p><a id="cli"></a></p>
+<h2 id="4-implementing-the-cli-program">4. Implementing the CLI Program</h2>
+<p>As mentioned, this is about a CLI program, so we need to work with the shell. I won&rsquo;t explain how the shell works in this article, as it&rsquo;s a broad topic, but I will briefly cover how to enhance your CLI program with some shell functions.</p>
+<p>If you’ve used Linux, you’ve likely used the terminal. Pressing <TAB> while typing a command in the terminal triggers auto-completion, which is a useful feature. Shell variables can be used or created for various purposes. Shells often work with parent and child processes, with variables existing only in one or the other, or both.</p>
+<p>When you execute a script with ./script.sh, only the variables specified in the script are available. Using the source command executes the script in the current shell process, making all variables in and out of the script accessible. This is why you always need to source your .bashrc to apply new settings.</p>
+<p>Here’s an example of a bash completion script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>_genp_completion<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">if</span> <span style="color:#f92672">[</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">${#</span><span style="color:#111">COMP_WORDS</span><span style="color:#111">[@]</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span> !<span style="color:#f92672">=</span> <span style="color:#d88200">&#34;2&#34;</span> <span style="color:#f92672">]</span><span style="color:#111">;</span> <span style="color:#00a8c8">then</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">return</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">COMPREPLY</span><span style="color:#f92672">=(</span><span style="color:#00a8c8">$(</span><span style="color:#111">compgen</span> -W <span style="color:#d88200">&#34;--alphanum --digit --symbol --help&#34;</span> -- <span style="color:#d88200">&#34;</span><span style="color:#d88200">${</span><span style="color:#111">COMP_WORDS</span><span style="color:#111">[1]</span><span style="color:#d88200">}</span><span style="color:#d88200">&#34;</span><span style="color:#00a8c8">)</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#111">complete</span> -F _genp_completion genp
+</span></span></code></pre></div><p>This script enables auto-completion for the genp command by using complete to call a function that checks the number of arguments and provides completion options.</p>
+<p>To use this script, add the following line to your .bashrc:</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#111">source</span> &lt;dir&gt;/genp_completion.bash
+</span></span></code></pre></div><p>This allows you to use <TAB> for auto-completing the options available in your program.</p>
+<p>Here are some useful links to understand the source command and bash completion:</p>
+<ul>
+<li>
+<p><a href="https://superuser.com/questions/176783/what-is-the-difference-between-executing-a-bash-script-vs-sourcing-it/176788#176788">linux - What is the difference between executing a Bash script vs sourcing it? - Super User</a></p>
+</li>
+<li>
+<p><a href="https://iridakos.com/programming/2018/03/01/bash-programmable-completion-tutorial">Creating a bash completion script</a></p>
+</li>
+<li>
+<p><a href="https://spin.atomicobject.com/2016/02/14/bash-programmable-completion/">How to Use Bash Programmable Completion</a></p>
+</li>
+</ul>
+<h2 id="end">END</h2>
+<p>With that, we come to the end of this article. Here is the source code for this program on GitHub and GitLab, along with the guide to installing the autocompletion I discussed. The program is functional but has room for improvement. If you spot a bug or have suggestions, I’d love to hear from you. Take care, and see you next time.</p>
+<p>Feel free to adjust further based on your preferences!</p>
+
+      
+      <div class="post-date">
+        <span class="g time">September 9, 2022 </span> &#8729;
+         
+         <a href="https://maverick.canhtran.me/tags/coding/">coding</a> <a href="https://maverick.canhtran.me/tags/technology/">technology</a>
+      </div>
+      
+    </section>
+    
+    
+    <div id="comments">
+      
+<script src="https://utteranc.es/client.js"
+    repo=canhtran/maverick
+    issue-term="pathname"
+    theme=github-dark
+    crossorigin="anonymous"
+    async>
+</script>
+
+
+    </div>
+    
+    
+  </div>
+</main>
+</body>
+</html>

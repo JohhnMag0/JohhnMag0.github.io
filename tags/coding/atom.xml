@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>coding on Victor Briganti</title>
+    <link>https://maverick.canhtran.me/tags/coding/</link>
+    <description>Recent content in coding on Victor Briganti</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 11 Dec 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://maverick.canhtran.me/tags/coding/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding Compilers</title>
+      <link>https://maverick.canhtran.me/posts/compiler-world/</link>
+      <pubDate>Sun, 11 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://maverick.canhtran.me/posts/compiler-world/</guid>
+      <description>Introduction It&amp;rsquo;s All Binaries Automatons Roll Out Compiling Flexing my Bison with a Calculator 1.Introduction When we think of computers, particularly programming languages, one of the first questions that should come to mind is, &amp;ldquo;How does the computer understand that?&amp;ldquo;And that is one of the questions that can be answered by analyzing how a compiler works.&#xA;Compilers are basically programs that can translate programming languages into computer language. And that is what we are going to talk about in this article.</description>
+    </item>
+    <item>
+      <title>Generating Random Passwords</title>
+      <link>https://maverick.canhtran.me/posts/generate-password/</link>
+      <pubDate>Fri, 09 Sep 2022 00:00:00 +0000</pubDate>
+      <guid>https://maverick.canhtran.me/posts/generate-password/</guid>
+      <description>Introduction Why Can&amp;rsquo;t Computers Generate Random Numbers? /dev/urandom and /dev/random Implementing a CLI on Linux 1. Introduction I have been taking some classes at the university over the past few weeks, and we have started to get a grasp on the C programming language. I really like the idea of seeing how things work under the hood. However, I believe that the best way to see if you are making progress is to work on projects.</description>
+    </item>
+    <item>
+      <title>Implementing 2fa Authentication in PHP</title>
+      <link>https://maverick.canhtran.me/posts/2fa-authentication/</link>
+      <pubDate>Mon, 08 Aug 2022 00:00:00 +0000</pubDate>
+      <guid>https://maverick.canhtran.me/posts/2fa-authentication/</guid>
+      <description>Introduction What is OTP? URI Format Encoding with Base32 Generating a QR Code 1. Introduction For the past month, I have been working on a library for PHP that implements OTP (One-Time Password) in an easy way. In the following sections, I will explain each technology and protocol used to build this software. If you prefer to skip the technical details, you can go directly to the explanation of the library.</description>
+    </item>
+  </channel>
+</rss>

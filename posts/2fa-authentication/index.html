@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Liste - https://maverick.canhtran.me">
+    <title>Implementing 2fa Authentication in PHP | Victor Briganti</title>
+    <meta name="description" content="2fa Authentication in PHP">
+    <meta property="og:title" content="Implementing 2fa Authentication in PHP" />
+<meta property="og:description" content="2fa Authentication in PHP" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://maverick.canhtran.me/posts/2fa-authentication/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-08T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-08-08T00:00:00+00:00" />
+
+
+    <meta itemprop="name" content="Implementing 2fa Authentication in PHP">
+<meta itemprop="description" content="2fa Authentication in PHP"><meta itemprop="datePublished" content="2022-08-08T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-08-08T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1156">
+<meta itemprop="keywords" content="coding,technology," />
+    
+    <link rel="canonical" href="https://maverick.canhtran.me/posts/2fa-authentication/">
+    <link rel="icon" href="https://maverick.canhtran.me/assets/favicon.ico">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link href="https://www.google-analytics.com" rel="preconnect" crossorigin>
+    <link rel="alternate" type="application/atom+xml" title="Victor Briganti" href="https://maverick.canhtran.me/atom.xml" />
+    <link rel="alternate" type="application/json" title="Victor Briganti" href="https://maverick.canhtran.me/feed.json" />
+    <link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=">
+    
+    
+    <style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding:2rem;background:#0a0909;color:#fcfcfc}.skip-link{position:absolute;top:-40px;left:0;background:#eee;z-index:100}.skip-link:focus{top:0}header{line-height:2;padding-bottom:1.5rem}.link{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.time{font-variant-numeric:tabular-nums;white-space:nowrap}blockquote{border-left:5px solid #eee;padding-left:1rem;margin:0}a,a:visited{color:inherit}a:hover,a.heading-link{text-decoration:none}pre{padding:.5rem;overflow:auto;overflow-x:scroll;overflow-wrap:normal}code,pre{font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;font-size:small;background:#222121}code{margin:.1rem;border:none}ul{list-style-type:square}ul,ol{padding-left:1.2rem}.list{line-height:2;list-style-type:none;padding-left:0}.list li{padding-bottom:.1rem}.meta{color:#777}.content{max-width:70ch;margin:0 auto}header{line-height:2;display:flex;justify-content:space-between;padding-bottom:1rem}header a{text-decoration:none}header ul{list-style-type:none;padding:0}header li,header a{display:inline}h2.post{padding-top:.5rem}header ul a:first-child{padding-left:1rem}.nav{height:1px;background:#000;content:'';max-width:10%}.list li{display:flex;align-items:baseline}.list li time{flex:initial}.hr-list{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:0;border-bottom:1px dotted #ccc;flex:1 0 1rem}.m,hr{border:0;margin:3rem 0}img{max-width:100%;height:auto}.post-date{margin:5% 0}.index-date{color:#9a9a9a}.animate-blink{animation:opacity 1s infinite;opacity:1}@keyframes opacity{0%{opacity:1}50%{opacity:.5}100%{opacity:0}}.tags{display:flex;justify-content:space-between}.tags ul{padding:0;margin:0}.tags li{display:inline}.avatar{height:120px;width:120px;position:relative;margin:-10px 0 0 15px;float:right;border-radius:50%}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;text-align:left;padding:8px}th{background-color:#f2f2f2} </style>
+  
+    
+  
+  
+  <script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "articleSection": "posts",
+      "name": "Implementing 2fa Authentication in PHP",
+      "headline": "Implementing 2fa Authentication in PHP",
+      "alternativeHeadline": "",
+      "description": "2fa Authentication in PHP",
+      "inLanguage": "en-us",
+      "isFamilyFriendly": "true",
+      "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https:\/\/maverick.canhtran.me\/posts\/2fa-authentication\/"
+      },
+      "author" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "creator" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "accountablePerson" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "copyrightHolder" : "Victor Briganti",
+      "copyrightYear" : "2022",
+      "dateCreated": "2022-08-08T00:00:00.00Z",
+      "datePublished": "2022-08-08T00:00:00.00Z",
+      "dateModified": "2022-08-08T00:00:00.00Z",
+      "publisher":{
+          "@type":"Organization",
+          "name": "Victor Briganti",
+          "url": "https://maverick.canhtran.me",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https:\/\/maverick.canhtran.me\/assets\/favicon.ico",
+              "width":"32",
+              "height":"32"
+          }
+      },
+      "image": "https://maverick.canhtran.me/assets/favicon.ico",
+      "url" : "https:\/\/maverick.canhtran.me\/posts\/2fa-authentication\/",
+      "wordCount" : "1156",
+      "genre" : [ "coding" , "technology" ],
+      "keywords" : [ "coding" , "technology" ]
+  }
+  </script>
+  
+  
+  </head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main</a>
+  <main id="main">
+  <div class="content">
+    <header>
+<p style="padding: 0;margin: 0;">
+  <a href="/">
+    <b>Victor Briganti</b>
+    <span class="text-stone-500 animate-blink">▮</span>
+  </a>
+</p>
+<ul style="padding: 0;margin: 0;">
+  
+  
+  <li class="">
+    <a href="/posts/"><span>Post</span></a>
+    
+  <li class="">
+    <a href="/tags/"><span>Tags</span></a>
+    
+  <li class="">
+    <a href="/about/"><span>About</span></a>
+    
+  </li>
+</ul>
+</header>
+<hr class="hr-list" style="padding: 0;margin: 0;">
+    <section>
+      <h2 class="post">Implementing 2fa Authentication in PHP</h2>
+      <ol>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#what-is-otp">What is OTP?</a></li>
+<li><a href="#uri-format">URI Format</a></li>
+<li><a href="#encoding-with-base32">Encoding with Base32</a></li>
+<li><a href="#generating-qr-code">Generating a QR Code</a></li>
+</ol>
+<p><a id="introduction"></a></p>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>For the past month, I have been working on a library for PHP that implements OTP (One-Time Password) in an easy way. In the following sections, I will explain each technology and protocol used to build this software. If you prefer to skip the technical details, you can go directly to the explanation of the library.</p>
+<p><a id="what-is-otp"></a></p>
+<h2 id="2-what-is-otp">2. What is OTP?</h2>
+<p>Simply put, OTP is a One-Time Password. It’s a password that can only be used once and is commonly used in two-factor authentication. There are various ways to implement OTPs in hardware or software, involving different algorithms for generating these passwords. In this article, I will explain a bit about HOTP (HMAC-based OTP) and TOTP (Time-based OTP).</p>
+<p>HOTP: Before explaining HOTP, it’s important to understand HMAC. HMAC stands for Hash-based Message Authentication Code, which essentially means that the message is encrypted using a secret key. In simple terms, HMAC takes a message and a secret, combines them, and uses an algorithm like SHA-1 to produce a hash. Now that you understand HMAC, we can look at RFC 4226, which defines HOTP and its implementation. This standard describes HOTP as a count-based or sequential-based method for generating one-time passwords. Each time a password is used, its count is incremented (usually by 1), resulting in a new password. The number of digits, how the count increments, and the hash algorithm can be customized. Due to its simplicity, HOTP can be implemented on many devices (which just need to count). To use HOTP, you need a password that can be randomly generated by the system or created by the user. HMAC and the algorithm generate these codes, as explained in the algorithm section. From the user’s perspective, they use the OTP, and each time they are authenticated, they must refresh their password, increasing the count. Despite its simplicity, there are important security and reliability measures to consider. For example, implement methods to prevent brute-force attacks since a 6-digit password can be easily brute-forced. It’s also crucial to handle the count value properly; if the user is using an app like Google Authenticator, your system doesn’t know the user’s count. Implement a window of values to verify counts that are out of sync with the server.</p>
+<p>TOTP: Defined by RFC 6238, TOTP is a variant of HOTP that uses time instead of a counter for password generation. Essentially, TOTP is similar to HOTP, but it incorporates UNIX timestamps. UNIX was one of the first operating systems and introduced a time standard that marks the start as January 1, 1970, 00:00:00. This timestamp is widely used today, and TOTP uses this to determine the value for generating the OTP. Instead of counts, TOTP defines a time period (usually 30 seconds) during which the password is valid. The advantage of TOTP is that the password regenerates within each period, so the user doesn’t need to refresh it manually. However, this introduces the issue of clock synchronization. To address this, you can implement control measures, such as checking time with an NTP server, but this also has limitations (latency, server downtime, etc.). Another approach is to create a time window, similar to the HOTP count, where you verify a period before and after the current time.</p>
+<p>Algorithm: Now that you understand HOTP and TOTP, let’s briefly look at how the algorithm generating these digits works. First, generate the hash using the count/time value, secret, and hash algorithm. The secret can be randomly generated or entered by the user, and the hash algorithm can be chosen from accepted algorithms (e.g., SHA1, SHA256, SHA512). The count/time needs to be transformed into a binary string. Here’s a brief overview of the PHP code for HOTP and TOTP:</p>
+<p>HOTP:</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#75af00">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a8c8">for</span> <span style="color:#111">(</span><span style="color:#111">$i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">7</span><span style="color:#111">;</span> <span style="color:#111">$i</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span> <span style="color:#111">$i</span><span style="color:#f92672">--</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">$byte_count</span><span style="color:#111">[</span><span style="color:#111">$i</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#75af00">chr</span><span style="color:#111">(</span><span style="color:#111">$count</span> <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xff</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#111">$count</span> <span style="color:#f92672">=</span> <span style="color:#111">$count</span> <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">8</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span></code></pre></div><p>This loop processes each byte of the count, masks it with 0xff to get the bits, and converts it to a character. The count is then shifted right by 8 bits to process the next byte. If the resulting string is less than 8 bytes, it pads with 0s.</p>
+<p>TOTP:</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#75af00">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">$binary_timestamp</span> <span style="color:#f92672">=</span> <span style="color:#75af00">pack</span><span style="color:#111">(</span><span style="color:#d88200">&#39;N*&#39;</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span> <span style="color:#f92672">.</span> <span style="color:#75af00">pack</span><span style="color:#111">(</span><span style="color:#d88200">&#39;N*&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">floor</span><span style="color:#111">(</span><span style="color:#111">$unix_time</span> <span style="color:#f92672">/</span> <span style="color:#111">$period</span><span style="color:#111">));</span>
+</span></span></code></pre></div><p>This line packs the time value into a binary string. It includes an initial 0 and the time divided by the period to ensure the full 8-byte value is obtained.</p>
+<p>With the count/time in hand, the hash is created, and the algorithm generates the OTP. The process involves extracting bytes, forming a hexadecimal code, converting to decimal, and then generating the final password.</p>
+<p><a id="uri-format"></a></p>
+<h2 id="3-uri-default-format">3. URI Default Format</h2>
+<p>If you have used 2FA authentication, you might have scanned a QR code generated by Google Authenticator (or AEGIS, which is better). To generate the QR code, the system needs a base text value containing all the necessary variables. This URI format is defined by Google (did I mention AEGIS is better?):</p>
+<pre tabindex="0"><code>otpauth://{totp|hotp}/{issuer}:{user}?secret={base32}&amp;issuer={issuer}&amp;algorithm={algo}&amp;digits={number}&amp;period|count={time|count}
+</code></pre><ul>
+<li>totp|hotp: Defines the protocol used</li>
+<li>issuer: Name of the program or company</li>
+<li>user: Username</li>
+<li>base32: The secret (encoded in base32)</li>
+<li>algo: Algorithm used to generate the hash</li>
+<li>number: Number of digits</li>
+<li>period|count: For TOTP, use period; for HOTP, use count</li>
+<li>time|count: Defines the number of seconds (TOTP) or initial count (HOTP)</li>
+</ul>
+<p>Most parameters are optional; only issuer, user, and secret are essential. If omitted, default values are used (count=0, period=30, algorithm=SHA1):</p>
+<pre tabindex="0"><code>otpauth://{totp|hotp}/{issuer}:{user}?secret={base32}
+</code></pre><p><a id="encoding-with-base32"></a></p>
+<h2 id="4-encoding-with-base32">4. Encoding with Base32</h2>
+<p>To generate the URI format, the library needs to encode a string in base32. Unfortunately, PHP lacks a built-in library for base32, so I created one. RFC 4648 describes base32 encoding, which uses an alphabet of 32 characters (letters and digits) where each character maps to a number. The base32 encoding process involves mapping the first 5 bits of the string to a character from the alphabet and continuing this process until all bits are processed. Padding with = is sometimes used, but my library does not include it. Decoding reverses the process, converting characters back to bits.</p>
+<p><a id="generating-qr-code"></a></p>
+<h2 id="5-generating-a-qr-code">5. Generating a QR Code</h2>
+<p>For QR Code generation, I used a library to convert the URI text into a QR Code image. This library allows customization of QR Code size, error correction level, mode (numeric, alphanumeric, byte, kanji), and output format (image or HTML). The QR Code (Quick Response Code) evolved from barcodes to store more data, using vertical and horizontal encoding. It includes Reed-Solomon error correction to ensure readability even if the code is damaged.</p>
+<p>For more information on QR Codes, visit QR Code official site.</p>
+<h2 id="end">END</h2>
+<p>I hope this article provides a good overview of OTP and the technologies used to create these passwords. Feel free to use or improve the library for your projects. The source code is available on my GitHub or GitLab, including a README file explaining how to use the library to generate OTPs, URIs, and QR Codes.</p>
+<p>That’s all, folks!</p>
+
+      
+      <div class="post-date">
+        <span class="g time">August 8, 2022 </span> &#8729;
+         
+         <a href="https://maverick.canhtran.me/tags/coding/">coding</a> <a href="https://maverick.canhtran.me/tags/technology/">technology</a>
+      </div>
+      
+    </section>
+    
+    
+    <div id="comments">
+      
+<script src="https://utteranc.es/client.js"
+    repo=canhtran/maverick
+    issue-term="pathname"
+    theme=github-dark
+    crossorigin="anonymous"
+    async>
+</script>
+
+
+    </div>
+    
+    
+  </div>
+</main>
+</body>
+</html>

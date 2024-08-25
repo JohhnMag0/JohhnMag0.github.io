@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Liste - https://maverick.canhtran.me">
+    <title>Compiling the Linux Kernel | Victor Briganti</title>
+    <meta name="description" content="A blog for building knowledge">
+    <meta property="og:title" content="Compiling the Linux Kernel" />
+<meta property="og:description" content="Introduction Preparing the environment Compiling 1. Introduction In the last few months, programming aimed at more obscure areas of computers has piqued my interest.And it was through these studies that I discovered the field of kernel development, and there is no better place to study kernel than the Linux kernel itself.
+But first and foremost, in order to learn kernel magic, we must first be able to compile one, and this guide will show you how to do so in a Debian system." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://maverick.canhtran.me/posts/debian-kernel/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-10-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-10-01T00:00:00+00:00" />
+
+
+    <meta itemprop="name" content="Compiling the Linux Kernel">
+<meta itemprop="description" content="Introduction Preparing the environment Compiling 1. Introduction In the last few months, programming aimed at more obscure areas of computers has piqued my interest.And it was through these studies that I discovered the field of kernel development, and there is no better place to study kernel than the Linux kernel itself.
+But first and foremost, in order to learn kernel magic, we must first be able to compile one, and this guide will show you how to do so in a Debian system."><meta itemprop="datePublished" content="2023-10-01T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-10-01T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1139">
+<meta itemprop="keywords" content="tutorial," />
+    
+    <link rel="canonical" href="https://maverick.canhtran.me/posts/debian-kernel/">
+    <link rel="icon" href="https://maverick.canhtran.me/assets/favicon.ico">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link href="https://www.google-analytics.com" rel="preconnect" crossorigin>
+    <link rel="alternate" type="application/atom+xml" title="Victor Briganti" href="https://maverick.canhtran.me/atom.xml" />
+    <link rel="alternate" type="application/json" title="Victor Briganti" href="https://maverick.canhtran.me/feed.json" />
+    <link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=">
+    
+    
+    <style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding:2rem;background:#0a0909;color:#fcfcfc}.skip-link{position:absolute;top:-40px;left:0;background:#eee;z-index:100}.skip-link:focus{top:0}header{line-height:2;padding-bottom:1.5rem}.link{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.time{font-variant-numeric:tabular-nums;white-space:nowrap}blockquote{border-left:5px solid #eee;padding-left:1rem;margin:0}a,a:visited{color:inherit}a:hover,a.heading-link{text-decoration:none}pre{padding:.5rem;overflow:auto;overflow-x:scroll;overflow-wrap:normal}code,pre{font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;font-size:small;background:#222121}code{margin:.1rem;border:none}ul{list-style-type:square}ul,ol{padding-left:1.2rem}.list{line-height:2;list-style-type:none;padding-left:0}.list li{padding-bottom:.1rem}.meta{color:#777}.content{max-width:70ch;margin:0 auto}header{line-height:2;display:flex;justify-content:space-between;padding-bottom:1rem}header a{text-decoration:none}header ul{list-style-type:none;padding:0}header li,header a{display:inline}h2.post{padding-top:.5rem}header ul a:first-child{padding-left:1rem}.nav{height:1px;background:#000;content:'';max-width:10%}.list li{display:flex;align-items:baseline}.list li time{flex:initial}.hr-list{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:0;border-bottom:1px dotted #ccc;flex:1 0 1rem}.m,hr{border:0;margin:3rem 0}img{max-width:100%;height:auto}.post-date{margin:5% 0}.index-date{color:#9a9a9a}.animate-blink{animation:opacity 1s infinite;opacity:1}@keyframes opacity{0%{opacity:1}50%{opacity:.5}100%{opacity:0}}.tags{display:flex;justify-content:space-between}.tags ul{padding:0;margin:0}.tags li{display:inline}.avatar{height:120px;width:120px;position:relative;margin:-10px 0 0 15px;float:right;border-radius:50%}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;text-align:left;padding:8px}th{background-color:#f2f2f2} </style>
+  
+    
+  
+  
+  <script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "articleSection": "posts",
+      "name": "Compiling the Linux Kernel",
+      "headline": "Compiling the Linux Kernel",
+      "alternativeHeadline": "",
+      "description": "Introduction Preparing the environment Compiling 1. Introduction In the last few months, programming aimed at more obscure areas of computers has piqued my interest.And it was through these studies that I discovered the field of kernel development, and there is no better place to study kernel than the Linux kernel itself.\nBut first and foremost, in order to learn kernel magic, we must first be able to compile one, and this guide will show you how to do so in a Debian system.",
+      "inLanguage": "en-us",
+      "isFamilyFriendly": "true",
+      "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https:\/\/maverick.canhtran.me\/posts\/debian-kernel\/"
+      },
+      "author" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "creator" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "accountablePerson" : {
+          "@type": "Person",
+          "name": "Victor Briganti"
+      },
+      "copyrightHolder" : "Victor Briganti",
+      "copyrightYear" : "2023",
+      "dateCreated": "2023-10-01T00:00:00.00Z",
+      "datePublished": "2023-10-01T00:00:00.00Z",
+      "dateModified": "2023-10-01T00:00:00.00Z",
+      "publisher":{
+          "@type":"Organization",
+          "name": "Victor Briganti",
+          "url": "https://maverick.canhtran.me",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https:\/\/maverick.canhtran.me\/assets\/favicon.ico",
+              "width":"32",
+              "height":"32"
+          }
+      },
+      "image": "https://maverick.canhtran.me/assets/favicon.ico",
+      "url" : "https:\/\/maverick.canhtran.me\/posts\/debian-kernel\/",
+      "wordCount" : "1139",
+      "genre" : [ "tutorial" ],
+      "keywords" : [ "tutorial" ]
+  }
+  </script>
+  
+  
+  </head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main</a>
+  <main id="main">
+  <div class="content">
+    <header>
+<p style="padding: 0;margin: 0;">
+  <a href="/">
+    <b>Victor Briganti</b>
+    <span class="text-stone-500 animate-blink">▮</span>
+  </a>
+</p>
+<ul style="padding: 0;margin: 0;">
+  
+  
+  <li class="">
+    <a href="/posts/"><span>Post</span></a>
+    
+  <li class="">
+    <a href="/tags/"><span>Tags</span></a>
+    
+  <li class="">
+    <a href="/about/"><span>About</span></a>
+    
+  </li>
+</ul>
+</header>
+<hr class="hr-list" style="padding: 0;margin: 0;">
+    <section>
+      <h2 class="post">Compiling the Linux Kernel</h2>
+      <ol>
+<li><a href="#1-introduction">Introduction</a></li>
+<li><a href="#2-preparing-the-environment">Preparing the environment</a></li>
+<li><a href="#3-compiling">Compiling</a></li>
+</ol>
+<h1 id="1-introduction">1. Introduction</h1>
+<p>In the last few months, programming aimed at more obscure areas of computers has piqued my interest.And it was through these studies that I discovered the field of kernel development, and there is no better place to study kernel than the Linux kernel itself.</p>
+<p>But first and foremost, in order to learn kernel magic, we must first be able to compile one, and this guide will show you how to do so in a Debian system.So lets start.</p>
+<h1 id="2-preparing-the-environment">2. Preparing the Environment</h1>
+<p><strong>I DO NOT RECOMMEND</strong> compiling and installing the kernel on your base system unless you know exactly what you&rsquo;re doing (which you don&rsquo;t if you&rsquo;re reading this).The compilation and installation of a kernel is prone to a lot of errors, and because of that, I do recommend the use of some kind of virtualization, in my project, I used QEMU and KVM, but you can use others.</p>
+<p>Here are some virtualization programs to install your virtual machine:</p>
+<p><a href="https://www.virtualbox.org/">VirtualBox</a></p>
+<p><a href="https://help.gnome.org/users/gnome-boxes/stable/index.html.en#start">GNOME Boxes</a></p>
+<p><a href="https://virt-manager.org/">Virt-Manager</a></p>
+<p>After the installation of these programs, you will need to get an ISO so you can install Debian (here I&rsquo;m going to use Debian 11). The link for the ISO is here: <a href="https://www.debian.org/distrib/%3E">https://www.debian.org/distrib/&gt;</a>. After you get the ISO and install it on the virtual machine, you are going to get a base Debian install.</p>
+<p>Now the next step is to install the necessary packages so we can compile the kernel.</p>
+<pre tabindex="0"><code># To install it, you must be root (or use sudo).   
+apt update &amp;&amp; apt install xz-utils wget libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev git bc build-essentials
+</code></pre><p>Let&rsquo;s take a closer look at each of these packages so you know what you&rsquo;re installing on your system.</p>
+<ul>
+<li>build-essentials; This package contains a list of packages. in this package, you will install the compilers for C (gcc) and C++ (g++), as well as the standard library for C in the developer version, make, and the libraries required to create a Debian package.</li>
+<li>flex; This is a lexical analyzer. It is used to search for patterns in a file.</li>
+<li>bison; It&rsquo;s generally used with flex, catches the tokens generated by flex, and then executes some kind of action.</li>
+<li>dkms; Dynamic Kernel Module Support is a program/framework that enables generating of Linux Kernel modules outside the source tree(very important for developers).</li>
+<li>bc; Basic Calculator(do I need to say more?).</li>
+<li>openssl; Library that has some security implementations.</li>
+<li>wget; It&rsquo;s a CLI application to download files from HTTP, HTTPS or FTP.</li>
+<li>git; Without a doubt, one of the most important programs for maintaining and tracking software versions.I won&rsquo;t go on any further, but here is a good place to start on this tool: <a href="https://git-scm.com/book/de/v2">https://git-scm.com/book/de/v2</a></li>
+<li>libncurses-dev; This is the ncurses developers library, a library that provides an API that allows programmers to write applications in the Terminal as if it were a graphical user interface.</li>
+<li>libssl-dev; Same as openssl but for developers.</li>
+<li>libefl-dev: a library that allows high-level ELF reading and writing.In the UNIX world (unlike Tolkien), an ELF is a file format for executables.</li>
+<li>libudev-dev; Udev is the Linux kernel&rsquo;s device manager.</li>
+<li>xz-utils: compression utilities for files in the xz format.</li>
+<li>gawk; You never know when you may need to gawk.</li>
+</ul>
+<p>OBS: Every time you have a package with the name *-dev it is because it is a developer library that is used for applications that need to be compiled before use.(Remember that before kicking your PC, when your program doesn&rsquo;t compile.).</p>
+<p>After installing this, we can download the new kernel version that we are going to compile. The debian that I have installed is version 5.10 (you can see this with the command &lsquo;uname -a&rsquo;), I&rsquo;m going to install the Linux kernel in version 6.1.4</p>
+<p>First, let&rsquo;s create a directory, so we can work in a more organized way:</p>
+<pre tabindex="0"><code>mkdir ~/source &amp;&amp; cd ~/source
+</code></pre><p>Now we can download the kernel for compilation (if you want another version, you can simply go here and choose another version: <a href="https://www.kernel.org/">https://www.kernel.org/</a>):</p>
+<pre tabindex="0"><code>wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.4.tar.xz
+</code></pre><p>Now let&rsquo;s extract it:</p>
+<pre tabindex="0"><code>tar -xvf linux-6.1.4.tar.xz &amp;&amp; cd linux-6.1.4
+</code></pre><p>Now we are finally ready to go to the next part.</p>
+<h1 id="3-compiling">3. Compiling</h1>
+<p>This is the final and most painful part of this whole tutorial. Here we are going to use make, a program that reads the makefile and then computes how and what to update and compile.</p>
+<p>The makefile of the kernel has a lot of options (and I mean a loooooooot of options), so I do encourage you to read some of this options and what they do.</p>
+<p>We are going to make the .config file that will tell the compiler what he should or should not compile and how (if it is or is not a module). There are a billion ways to create this file, but we are going to use the local mod one (because that was the one that worked).</p>
+<pre tabindex="0"><code>make localmodconfig
+</code></pre><p>They are going to ask you a lot of questions The default ones are usually good enough, but if you are not sure, take your time reading some of the options.If you are not happy with what you have, you can just use &ldquo;make menuconfig&rsquo; and edit some of the options.</p>
+<p>Another way to create this configuration is using &lsquo;make olddefconfig &amp;&amp; make menuconfig&rsquo;. But I have to alert you that if you are going to go that route, you need to remove trusted keys from the system.</p>
+<pre tabindex="0"><code>CONFIG_SYSTEM_TRUSTED_KEYS=&#34;&#34; 
+</code></pre><p>This is necessary because you&rsquo;re definitely not trustworthy.</p>
+<p>After making the config now you just need to compile the kernel itself. For that, you have some options, and I&rsquo;m going to show you two of them.</p>
+<p>The first one uses only the make:</p>
+<pre tabindex="0"><code>make -j2make modules_installmake install 
+</code></pre><p>Here &lsquo;make -j2&rsquo; is compiling the kernel, and the flag -j2 tells the compiler how many threads he can use for the compilation. Here I fix the number 2 but you can actually just use 1 thread with the command &lsquo;make&rsquo; or use other quantities (if you want to use all, just type &lsquo;make -j$(nproc)&rsquo;)</p>
+<p>The second way is using make to create a .deb:<code>make -j2 deb-pkg</code></p>
+<p>In this way, you are going to create some packages that can be installed using dpkg&rsquo;.</p>
+<pre tabindex="0"><code>dpkg -i linux*.deb
+</code></pre><p>Now everything that you need to do is reboot the system, and if everything goes well, you will have a Debian with a new kernel version.</p>
+<h2 id="end">END</h2>
+<p>If you could get to the end of this tutorial, congratulations! You are at least 10 years older than when you arrived. Compiling your own kernel is definitely a pain, but I hope that by the end of this tutorial you will have a better understanding of how the kernel assembly process works.</p>
+<h2 id="references">References</h2>
+<p>Here are the links that I used in my journey may they help you:</p>
+<p><a href="https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel">https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel</a></p>
+<p><a href="https://wiki.gentoo.org/wiki/Kernel/Configuration">https://wiki.gentoo.org/wiki/Kernel/Configuration</a></p>
+<p><a href="https://www.kernelconfig.io/index.html">https://www.kernelconfig.io/index.html</a></p>
+<p><a href="https://lkcamp.gitlab.io/lkcamp_docs/intro_course/lab01/">https://lkcamp.gitlab.io/lkcamp_docs/intro_course/lab01/</a></p>
+<p><a href="https://packages.debian.org/sid/">https://packages.debian.org/sid/</a></p>
+<p><a href="https://wiki.archlinux.org/title/Kernel/Traditional_compilation">https://wiki.archlinux.org/title/Kernel/Traditional_compilation</a></p>
+
+      
+      <div class="post-date">
+        <span class="g time">October 1, 2023 </span> &#8729;
+         
+         <a href="https://maverick.canhtran.me/tags/tutorial/">tutorial</a>
+      </div>
+      
+    </section>
+    
+    
+    <div id="comments">
+      
+<script src="https://utteranc.es/client.js"
+    repo=canhtran/maverick
+    issue-term="pathname"
+    theme=github-dark
+    crossorigin="anonymous"
+    async>
+</script>
+
+
+    </div>
+    
+    
+  </div>
+</main>
+</body>
+</html>
