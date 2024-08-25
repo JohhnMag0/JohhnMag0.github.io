@@ -3,19 +3,19 @@
     
     <title>Victor Briganti</title>
     <description>A blog for building knowledge</description>
-    <link>https://maverick.canhtran.me</link>
+    <link>https://Victor-Briganti.github.io</link>
     
     <language>en</language>
     <copyright>Copyright 2024, Calvin Tran</copyright>
     <lastBuildDate>Sun, 01 Oct 2023 00:00:00 +0000</lastBuildDate>
     <generator>Hugo - gohugo.io</generator>
     <docs>http://cyber.harvard.edu/rss/rss.html</docs>
-    <atom:link href="https://maverick.canhtran.me/atom.xml" rel="self" type="application/atom+xml"/>
+    <atom:link href="https://Victor-Briganti.github.io/atom.xml" rel="self" type="application/atom+xml"/>
     
     
     <item>
       <title>Compiling the Linux Kernel</title>
-      <link>https://maverick.canhtran.me/posts/debian-kernel/</link>
+      <link>https://Victor-Briganti.github.io/posts/debian-kernel/</link>
       <description>&lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;#1-introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#2-preparing-the-environment&#34;&gt;Preparing the environment&lt;/a&gt;&lt;/li&gt;
@@ -89,13 +89,13 @@ apt update &amp;amp;&amp;amp; apt install xz-utils wget libncurses-dev gawk flex
 &lt;p&gt;&lt;a href=&#34;https://wiki.archlinux.org/title/Kernel/Traditional_compilation&#34;&gt;https://wiki.archlinux.org/title/Kernel/Traditional_compilation&lt;/a&gt;&lt;/p&gt;
 </description>
       <author>Victor Briganti</author>
-      <guid>https://maverick.canhtran.me/posts/debian-kernel/</guid>
+      <guid>https://Victor-Briganti.github.io/posts/debian-kernel/</guid>
       <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
     </item>
     
     <item>
       <title>Understanding Compilers</title>
-      <link>https://maverick.canhtran.me/posts/compiler-world/</link>
+      <link>https://Victor-Briganti.github.io/posts/compiler-world/</link>
       <description>&lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;#1introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#2its-all-binaries&#34;&gt;It&amp;rsquo;s All Binaries&lt;/a&gt;&lt;/li&gt;
@@ -174,13 +174,13 @@ apt update &amp;amp;&amp;amp; apt install xz-utils wget libncurses-dev gawk flex
 &lt;p&gt;The concept of compilers is an extremely dense thing and you can really go down a rabbit hole when studying it but I hope this article has shed some light on what it is and where you can start. Stay safe and goodbye.&lt;/p&gt;
 </description>
       <author>Victor Briganti</author>
-      <guid>https://maverick.canhtran.me/posts/compiler-world/</guid>
+      <guid>https://Victor-Briganti.github.io/posts/compiler-world/</guid>
       <pubDate>Sun, 11 Dec 2022 00:00:00 +0000</pubDate>
     </item>
     
     <item>
       <title>Vim or How do I exit this?</title>
-      <link>https://maverick.canhtran.me/posts/vim-exiting/</link>
+      <link>https://Victor-Briganti.github.io/posts/vim-exiting/</link>
       <description>&lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;#1-introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#2-a-brief-history-of-vim&#34;&gt;A Brief History of VIM&lt;/a&gt;&lt;/li&gt;
@@ -256,13 +256,13 @@ apt update &amp;amp;&amp;amp; apt install xz-utils wget libncurses-dev gawk flex
 &lt;p&gt;So we’ve reached the end of this article. I hope that you’ve gotten a good push in the direction of how to use Vim and where to start. And as always, remember :wq (stay safe and goodbye).&lt;/p&gt;
 </description>
       <author>Victor Briganti</author>
-      <guid>https://maverick.canhtran.me/posts/vim-exiting/</guid>
+      <guid>https://Victor-Briganti.github.io/posts/vim-exiting/</guid>
       <pubDate>Mon, 10 Oct 2022 00:00:00 +0000</pubDate>
     </item>
     
     <item>
       <title>Generating Random Passwords</title>
-      <link>https://maverick.canhtran.me/posts/generate-password/</link>
+      <link>https://Victor-Briganti.github.io/posts/generate-password/</link>
       <description>&lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#im-sorry-dave&#34;&gt;Why Can&amp;rsquo;t Computers Generate Random Numbers?&lt;/a&gt;&lt;/li&gt;
@@ -384,13 +384,13 @@ apt update &amp;amp;&amp;amp; apt install xz-utils wget libncurses-dev gawk flex
 &lt;p&gt;Feel free to adjust further based on your preferences!&lt;/p&gt;
 </description>
       <author>Victor Briganti</author>
-      <guid>https://maverick.canhtran.me/posts/generate-password/</guid>
+      <guid>https://Victor-Briganti.github.io/posts/generate-password/</guid>
       <pubDate>Fri, 09 Sep 2022 00:00:00 +0000</pubDate>
     </item>
     
     <item>
       <title>Implementing 2fa Authentication in PHP</title>
-      <link>https://maverick.canhtran.me/posts/2fa-authentication/</link>
+      <link>https://Victor-Briganti.github.io/posts/2fa-authentication/</link>
       <description>&lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#what-is-otp&#34;&gt;What is OTP?&lt;/a&gt;&lt;/li&gt;
@@ -447,7 +447,7 @@ apt update &amp;amp;&amp;amp; apt install xz-utils wget libncurses-dev gawk flex
 &lt;p&gt;That’s all, folks!&lt;/p&gt;
 </description>
       <author>Victor Briganti</author>
-      <guid>https://maverick.canhtran.me/posts/2fa-authentication/</guid>
+      <guid>https://Victor-Briganti.github.io/posts/2fa-authentication/</guid>
       <pubDate>Mon, 08 Aug 2022 00:00:00 +0000</pubDate>
     </item>
     

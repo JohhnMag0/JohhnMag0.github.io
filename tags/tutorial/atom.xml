@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tutorial on Victor Briganti</title>
-    <link>https://maverick.canhtran.me/tags/tutorial/</link>
+    <link>https://Victor-Briganti.github.io/tags/tutorial/</link>
     <description>Recent content in tutorial on Victor Briganti</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 01 Oct 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://maverick.canhtran.me/tags/tutorial/atom.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://Victor-Briganti.github.io/tags/tutorial/atom.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Compiling the Linux Kernel</title>
-      <link>https://maverick.canhtran.me/posts/debian-kernel/</link>
+      <link>https://Victor-Briganti.github.io/posts/debian-kernel/</link>
       <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
-      <guid>https://maverick.canhtran.me/posts/debian-kernel/</guid>
+      <guid>https://Victor-Briganti.github.io/posts/debian-kernel/</guid>
       <description>Introduction Preparing the environment Compiling 1. Introduction In the last few months, programming aimed at more obscure areas of computers has piqued my interest.And it was through these studies that I discovered the field of kernel development, and there is no better place to study kernel than the Linux kernel itself.&#xA;But first and foremost, in order to learn kernel magic, we must first be able to compile one, and this guide will show you how to do so in a Debian system.</description>
     </item>
     <item>
       <title>Vim or How do I exit this?</title>
-      <link>https://maverick.canhtran.me/posts/vim-exiting/</link>
+      <link>https://Victor-Briganti.github.io/posts/vim-exiting/</link>
       <pubDate>Mon, 10 Oct 2022 00:00:00 +0000</pubDate>
-      <guid>https://maverick.canhtran.me/posts/vim-exiting/</guid>
+      <guid>https://Victor-Briganti.github.io/posts/vim-exiting/</guid>
       <description>Introduction A Brief History of VIM VIMtutor Modes Useful Commands Plug-ins and .vimrc 1. Introduction If you came here because of the title, I will just answer you on the spot: :wq if you want to save before leaving, or :q! if you just want to exit without saving. If that was all that you needed to know and you really didn&amp;rsquo;t like how difficult it was to use Vim, I can&amp;rsquo;t hold you in this article anymore.</description>
     </item>
   </channel>
